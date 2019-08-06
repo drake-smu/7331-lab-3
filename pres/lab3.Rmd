@@ -1,0 +1,104 @@
+---
+title: "Association Rules"
+author: "Che Cobb, Andy Heroy, Carson Drake, David Josephs"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+    theme: paper
+    df_print: paged
+    keep_md: TRUE
+
+---
+
+```{r setup, echo = F}
+if (knitr::is_latex_output()) {
+	knitr::opts_chunk$set(dev = "tikz")
+}
+knitr::opts_knit$set(cache =T, autodep = T)
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(message = F)
+knitr::opts_chunk$set(tidy = T, tidy.opts = list(comment = F))
+knitr::opts_chunk$set(fig.align = "center")
+knitr::opts_chunk$set(comment = '#>')
+knitr::opts_chunk$set(fig.path = 'fig/')
+library(knitr)
+```
+
+```{r, echo = F}
+read_chunk('../analysis/Lab3Start.R')
+```
+
+# Setup
+
+First, we need to load in the necessary libraries:
+
+```{r libs}
+```
+
+Then we need to load our dataset, as well as examine it a bit
+
+```{r datadef}
+```
+
+Next lets get rid of some columns we are not going to use/that has some issues, and then lets break down our numeric variables into factors using `cut`
+
+```{r cleanup}
+```
+
+Next, we convert the data to an object with class `transactions`, after viewing it again
+
+```{r transact}
+```
+
+# Exploration
+
+Before we begin with our analysis, lets check out the rule frequencies within the dataset. We are looking for rules with `support >= .2`
+
+```{r rulefreq}
+```
+
+# Rule mining
+
+Next, lets mine some rules with the apriori algorithm, and then clean up redundant rules. We are still sorting out what to set the minsupp and minconf to.
+
+```{r rulemine}
+```
+
+## Rule quality and inspection
+
+Next, let us inspect the rules, and examine their quality
+
+```{r quality}
+```
+
+### Plots
+
+First lets view a scatterplot of our rules
+
+```{r scatterplot}
+```
+
+Next lets look at  a balloon plot
+
+```{r baloonplot}
+```
+
+Parallel plot
+
+```{r plplot}
+```
+
+Two key plot
+
+```{r kplot}
+```
+
+grouped plot
+
+```{r gplot}
+```
+
