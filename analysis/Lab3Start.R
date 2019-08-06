@@ -43,15 +43,19 @@ head(quality(rulesorted))
 inspect(rulesorted)
 
 #Scatter Plot
-plot(zerules.pruned, method = "scatterplot", measure = "confidence", shading = "lift")
+plot(rulesorted, method = "scatterplot", measure = "confidence", shading = "lift")
 
 #Balloon plot
-plot(zerules.pruned, method="graph", control=list(type="items"))
+plot(rulesorted, method="graph", measure= "confidence", shading = "lift")
 
 #Parallel plot
-plot(zerules.pruned, method="paracoord", control=list(reorder=T))
+plot(rulesorted, method="paracoord", measure= "confidence", shading = "lift", control=list(reorder=T))
 
+#Two-key plot
+plot(rulesorted, method="two-key plot", measure = 'confidence', shading='lift')
 
+#grouped
+plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
 
 
 
