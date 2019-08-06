@@ -1,13 +1,13 @@
 library(arules)
 library(arulesViz)
-library(Hmisc)
+# library(Hmisc)
 library(dplyr)
 
 data("AdultUCI")
 dim(AdultUCI)
 
 #Dropping fnlwgt, education number, capgain/loss
-data <- AdultUCI[, -c(3,5, 11:12)]
+data <- AdultUCI[, -c(3,5,11:12)]
 
 
 
@@ -25,5 +25,10 @@ data$hoursperweek <- cut(data$hoursperweek, breaks = c(0,20,40,60,80), labels =c
 
 str(data)
 
-zerules <- apriori(data, parameter = list(minlen=2, supp=0.1, conf = 0.6), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F))
+zerules <- apriori(data, parameter = list(minlen=2, supp=0.1, conf = 0.7), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F))
 inspect(zerules)
+
+redundant <- is.redundant(zerules)
+rules.pruned <- zerules[redundant == F]
+rulesorted <- sort(rules.pruned, by="lift", decreasing = T)
+inspect(rulesorted)
