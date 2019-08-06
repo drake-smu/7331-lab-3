@@ -56,7 +56,7 @@ inspectDT(rulesorted)
 
 ## @knitr scatterplot
 #Scatter Plot
-plot(rulesorted, method = "scatterplot", measure = "confidence", shading = "lift", engine = "htmlwidget")
+plot(rulesorted, method = "scatterplot", measure = c("confidence", "support"), shading = "lift", engine = "htmlwidget")
 ## @knitr baloonplot
 #Balloon plot
 plot(rulesorted, method="graph", measure= "confidence", shading = "lift", engine = "htmlwidget")
@@ -100,7 +100,7 @@ inspectDT(rulesorted2)
 
 
 ## @knitr plot2
-plot(rulesorted2, method = "scatterplot", measure = "confidence", shading = "lift", engine = "htmlwidget")
+plot(rulesorted2, method = "scatterplot", measure = c("confidence","support"), shading = "lift", engine = "htmlwidget")
 ## @knitr bplo2
 #Balloon plot
 plot(rulesorted2, method="graph", measure= "confidence", shading = "lift", engine = "htmlwidget")
