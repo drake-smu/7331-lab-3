@@ -9,8 +9,6 @@ dim(AdultUCI)
 #Dropping fnlwgt, education number, capgain/loss
 data <- AdultUCI[, -c(3,5,11:12)]
 
-
-
 # colnames(data)[colnames(data)=="capital-gain"] <- "capgain"
 # colnames(data)[colnames(data)=="capital-loss"] <- "caploss"
 colnames(data)[colnames(data)=="hours-per-week"] <- "hoursperweek"
@@ -19,21 +17,25 @@ colnames(data)[colnames(data)=="hours-per-week"] <- "hoursperweek"
 # data$capgain <- with(data,impute(capgain,median))
 # data$caploss <- with(data,impute(caploss,median))
 
+#Breaking down numerical categories to bins
 data$age <- cut(data$age, breaks = c(15,25,45,65,100), labels =c("Young", "Middleaged", "Senior", "Retired"))
 data$hoursperweek <- cut(data$hoursperweek, breaks = c(0,20,40,60,80), labels =c("part-time", "full-time", "hard-working", "need-a-life") )
 
 str(data)
-
+#Change the dataset to transactional
 data <- as(data, "transactions")
-
 summary(data)
+#Now store it as a dataframe
 as(data, "data.frame")
 
+
+#Quick check of rule frequencies
 itemFrequencyPlot(data, support=.2)
 
+#Now applying apriori for rule mining
 zerules <- apriori(data, parameter = list(minlen=2, supp=0.2, conf = 0.3), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F))
 
-
+#remove redundants and sort by lift
 redundant <- is.redundant(zerules)
 zerules.pruned <- zerules[redundant == FALSE]
 rulesorted <- sort(zerules.pruned, by="lift", decreasing = TRUE)
