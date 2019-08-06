@@ -3,6 +3,8 @@ library(arules)
 library(arulesViz)
 # library(Hmisc)
 library(dplyr)
+library(plotly)
+library(data.table)
 
 ## @knitr datadef
 data("AdultUCI")
@@ -50,20 +52,20 @@ length(rulesorted)
 
 ## @knitr quality
 (quality(rulesorted))
-inspect(rulesorted)
+inspectDT(rulesorted)
 
 ## @knitr scatterplot
 #Scatter Plot
-plot(rulesorted, method = "scatterplot", measure = "confidence", shading = "lift")
+plot(rulesorted, method = "scatterplot", measure = "confidence", shading = "lift", engine = "htmlwidget")
 ## @knitr baloonplot
 #Balloon plot
-plot(rulesorted, method="graph", measure= "confidence", shading = "lift")
+plot(rulesorted, method="graph", measure= "confidence", shading = "lift", engine = "htmlwidget")
 ## @knitr plplot
 #Parallel plot
 plot(rulesorted, method="paracoord", measure= "confidence", shading = "lift", control=list(reorder=T))
 ## @knitr kplot
 #Two-key plot
-plot(rulesorted, method="two-key plot", measure = 'confidence', shading='lift')
+plot(rulesorted, method="two-key plot", measure = 'confidence', shading='lift', engine = "htmlwidget")
 ## @knitr gplot
 #grouped
 plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
@@ -79,3 +81,35 @@ plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
 # plot(rules1, measure=c("support","lift"), shading="confidence")
 # dev.copy(png,filename="rules1-b.png", width=500, height=500);
 # dev.off ();
+
+# redux
+## @knitr redux
+
+rule2 <- apriori(data, parameter = list(supp=0.01, conf = 0.5), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F)) 
+length(rule2)
+
+#remove redundants and sort by lift
+redundant <- is.redundant(rule2)
+rulep <- rule2[redundant == FALSE]
+rulesorted2 <- sort(rulep, by="lift", decreasing = TRUE)
+length(rulesorted2)
+
+## @knitr inspec
+head(quality(rulesorted2))
+inspectDT(rulesorted2)
+
+
+## @knitr plot2
+plot(rulesorted2, method = "scatterplot", measure = "confidence", shading = "lift", engine = "htmlwidget")
+## @knitr bplo2
+#Balloon plot
+plot(rulesorted2, method="graph", measure= "confidence", shading = "lift", engine = "htmlwidget")
+## @knitr pplo2
+#Parallel plot
+plot(rulesorted2, method="paracoord", measure= "confidence", shading = "lift", control=list(reorder=T))
+#Two-key plot
+## @knitr kplo2
+plot(rulesorted2, method="two-key plot", measure = 'confidence', shading='lift', engine = "htmlwidget")
+#grouped
+## @knitr gplo2
+plot(rulesorted2, method="grouped", measure = 'confidence', shading='lift')

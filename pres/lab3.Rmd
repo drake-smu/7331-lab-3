@@ -102,3 +102,27 @@ grouped plot
 ```{r gplot}
 ```
 
+# alternate rule mining
+
+```{r redux}
+```
+
+## Inspection
+
+```{r inspec}
+```
+
+## Plotting
+
+```{r plot2}
+```
+
+```{r bplo2}
+```
+
+
+```{r kplo2}
+```
+
+```{r gplo2}
+```
