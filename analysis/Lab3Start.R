@@ -32,3 +32,9 @@ redundant <- is.redundant(zerules)
 rules.pruned <- zerules[redundant == F]
 rulesorted <- sort(rules.pruned, by="lift", decreasing = T)
 inspect(rulesorted)
+
+#Scatter Plot
+plot(rules.pruned)
+
+#Balloon plot
+plot(rules.pruned, method="graph", control=list(type="items"))
