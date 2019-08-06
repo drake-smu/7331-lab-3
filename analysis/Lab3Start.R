@@ -26,20 +26,22 @@ str(data)
 
 data <- as(data, "transactions")
 
-head(data)
+summary(data)
 as(data, "data.frame")
 
+itemFrequencyPlot(data, support=.2)
 
-zerules <- apriori(data, parameter = list(minlen=2, supp=0.1, conf = 0.6), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F))
-inspect(zerules)
+zerules <- apriori(data, parameter = list(minlen=2, supp=0.2, conf = 0.3), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F))
+
 
 redundant <- is.redundant(zerules)
 zerules.pruned <- zerules[redundant == FALSE]
 rulesorted <- sort(zerules.pruned, by="lift", decreasing = TRUE)
+head(quality(rulesorted))
 inspect(rulesorted)
 
 #Scatter Plot
-plot(zerules.pruned)
+plot(zerules.pruned, method = "scatterplot", measure = "confidence", shading = "lift")
 
 #Balloon plot
 plot(zerules.pruned, method="graph", control=list(type="items"))
@@ -48,3 +50,15 @@ plot(zerules.pruned, method="graph", control=list(type="items"))
 plot(zerules.pruned, method="paracoord", control=list(reorder=T))
 
 
+
+
+
+# For saving plot images
+# image(Adult)
+# plot(rules1)
+# dev.copy(png,filename="rules1-a.png", width=500, height=500);
+# dev.off ();
+# 
+# plot(rules1, measure=c("support","lift"), shading="confidence")
+# dev.copy(png,filename="rules1-b.png", width=500, height=500);
+# dev.off ();
