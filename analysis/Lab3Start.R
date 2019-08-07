@@ -6,6 +6,7 @@ library(dplyr)
 library(plotly)
 library(data.table)
 
+
 ## @knitr datadef
 data("AdultUCI")
 dim(AdultUCI)
@@ -14,7 +15,14 @@ AdultUCI
 ## @knitr cleanup
 #Dropping fnlwgt, education number, capgain/loss
 data <- AdultUCI[, -c(3,5,11:12)]
+summary(data)
 
+#Lets look at NA value's first.
+NA_sum <- sort(sapply(data, function(x) sum(is.na(x))), decreasing = TRUE)
+print(NA_sum) 
+
+
+#Now lets change our column names of hour per week.
 # colnames(data)[colnames(data)=="capital-gain"] <- "capgain"
 # colnames(data)[colnames(data)=="capital-loss"] <- "caploss"
 colnames(data)[colnames(data)=="hours-per-week"] <- "hoursperweek"
