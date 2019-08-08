@@ -33,17 +33,13 @@ read_chunk('../analysis/Lab3Start.R')
 ```
 # Business Understanding
 
-* [10 points] Describe the purpose of the data set you selected (i.e., why was this data bcollected in the first place?). How will you measure the effectiveness of a good
-algorithm? Why does your chosen validation method make sense for this specific
-dataset and the stakeholders needs?
+* [10 points] Describe the purpose of the data set you selected (i.e., why was this data bcollected in the first place?). How will you measure the effectiveness of a good algorithm? Why does your chosen validation method make sense for this specific dataset and the stakeholders needs?
 
-We chose this dataset from the UCI's machine learning repository for its categorical
-predictive attributes.  It contains 1994 Census data pulled from the US Census
-database.  The prediction task we've set forth is to predict if a persons
-salary range is >50k in a 1994, based on the various categorical/numerical
-attributes in the census database. The link to the data source is below:
+We chose this dataset from the UCI's machine learning repository for its categorical predictive attributes.  It contains 1994 Census data pulled from the US Census database.  The prediction task we've set forth is to predict if a person salary range is >50k in a 1994, based on the various categorical/numerical attributes in the census database. The link to the data source is below:
 
 https://archive.ics.uci.edu/ml/datasets/census+income
+
+The effectiveness of our algorithm will be determined by support, confidence and lift.  As these are the metrics that describe how strong a relationship between each element is with the other elements within each transaction.  Currently, there are no methods for cross validation of association rules, although there are some hard working individuals out there that are attempting to create such a tool.
 
 
 # Data Understanding
