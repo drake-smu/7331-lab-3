@@ -43,5 +43,3 @@ levels(data$native_country)[levels(data$native_country)=="?"] <- "Other"
 
 levels(data$workclass)
 summary(data)
-# levels(data$education)[levels(data$education)==" HS-grad"] <- "Diploma"
-
