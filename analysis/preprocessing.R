@@ -4,7 +4,7 @@ library(forcats)
 #------Data Specific Cleaning------------
 
 ## @knitr dataclean
-data <- read.csv("./data/adult-test.csv")
+data <- read.csv("./data/adult-training.csv")
 
 #Lets look at NA value's first.
 NA_sum <- sort(sapply(data, function(x) sum(is.na(x))), decreasing = TRUE)
@@ -37,8 +37,8 @@ data$education <- fct_collapse(data$education,
     )
 #Remap income bracket levels
 data$income_bracket <- fct_collapse(data$income_bracket,
-                             small = "<=50K.",
-                             large = ">50K."
+                             small = "<=50K",
+                             large = ">50K"
 )
 
 #remove ? and replace with other
