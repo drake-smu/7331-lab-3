@@ -17,8 +17,11 @@ data
 #data <- read.csv("./data/adult-test.csv")
 
 data <- data[, -c(3,5,11:12)]
-summary(data)
+colnames(data)[colnames(data)=="hours_per_week"] <- "hoursperweek"
+data$age <- cut(data$age, breaks = c(15,25,45,65,100), labels =c("Young", "Middleaged", "Senior", "Retired"))
+ data$hoursperweek <- cut(data$hoursperweek, breaks = c(0,20,40,60,80), labels =c("part-time", "full-time", "hard-working", "need-a-life") )
 
+## @knitr whatevs
 #Lets look at NA value's first.
 NA_sum <- sort(sapply(data, function(x) sum(is.na(x))), decreasing = TRUE)
 print(NA_sum) 
@@ -52,7 +55,7 @@ summary(data)
 itemFrequencyPlot(data, support=.2)
 ## @knitr rulemine
 #Now applying apriori for rule mining
-zerules <- apriori(data, parameter = list(minlen=2, supp=0.2, conf = 0.15), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F)) 
+zerules <- apriori(data, parameter = list(minlen=2, supp=0.2, conf = 0.15), appearance = list(rhs=c("income_bracket=small", "income_bracket=large"), default="lhs"),control = list(verbose=F)) 
 length(zerules)
 
 #remove redundants and sort by lift
@@ -96,7 +99,7 @@ plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
 # redux
 ## @knitr redux
 
-rule2 <- apriori(data, parameter = list(supp=0.01, conf = 0.5), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F)) 
+rule2 <- apriori(data, parameter = list(supp=0.01, conf = 0.5), appearance = list(rhs=c("income_bracket=small", "income_bracket=large"), default="lhs"),control = list(verbose=F)) 
 length(rule2)
 
 #remove redundants and sort by lift

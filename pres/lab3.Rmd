@@ -19,8 +19,8 @@ output:
 if (knitr::is_latex_output()) {
 	knitr::opts_chunk$set(dev = "tikz")
 }
-knitr::opts_knit$set(cache =T, autodep = T)
 knitr::opts_chunk$set(warning = F)
+knitr::opts_knit$set(root.dir = "..")
 knitr::opts_chunk$set(message = F)
 knitr::opts_chunk$set(tidy = T, tidy.opts = list(comment = F))
 knitr::opts_chunk$set(fig.align = "center")
@@ -29,18 +29,15 @@ knitr::opts_chunk$set(fig.path = 'fig/')
 library(knitr)
 ```
 
-```{r, echo = F}
-read_chunk('../analysis/preprocessing.R')
+# Project Overview
 
-```
+Please we need to discuss project motivation and our experiment, just as Rida asked
 
-```{r dataclean}
+Then we can begin our analysis
 
-```
+# Project Setup
 
-```{r, echo = F}
-read_chunk('../analysis/Lab3Start.R')
-```
+
 # Business Understanding
 
 * [10 points] Describe the purpose of the data set you selected (i.e., why was this data bcollected in the first place?). How will you measure the effectiveness of a good algorithm? Why does your chosen validation method make sense for this specific dataset and the stakeholders needs?
@@ -81,25 +78,73 @@ Here we will discuss each attribute and give some description about its ranges.
   
 # Setup
 
-First, we need to load in the necessary libraries:
 
-```{r libs}
+First, lets go ahead and load up necessary libraries:
+
+```{r libraries, code = readLines("../libs.R")}
 ```
 
-Then we need to load our dataset, as well as examine it a bit
 
-```{r datadef}
+```{r, echo = F}
+# read in chunks here
+read_chunk('analysis/preprocessing.R')
+read_chunk('analysis/Lab3Start.R')
 ```
 
-Next lets get rid of some columns we are not going to use/that has some issues, look at some of the NA values, then break down our numeric variables into factors using `cut`
+Next, lets import our dataset
+
+```{r dataimport}
+```
+
+## Data Quality Inspection
+
+The first thing we must do is check and see if there are any NAs in our dataset, just to make sure to not mess up our analysis.
+
+```{r dataqual}
+```
+
+
+## Data Cleaning
+
+Looks like we are doing ok here. The next issue we have in the dataset, is because of the way the csv was stored, some of the levels in our factors include leading and trailing whitespace. This is highly undesirable, so we must clean it up:
+
+```{r factorclean}
+```
+
+Next, we need to reencode our data as factors. First, lets encode the education levels into factors with larger groups (for example 1st-12th grade should be no diploma, not a bunch of levels).
+
+```{r edubin}
+```
+
+Then the the income brackets:
+
+```{r incbrack}
+```
+
+Next, lets change the `?` levels to something more useful:
+
+```{r questionmark}
+lapply(data[GetFactors(data)], FixLevels)
+```
+
+
+Next, lets remove the fnlwgt, education number, and capital gain and loss columns, as they are unneeded. We also need to rename some columns to be easier for us, and use the `cut` function to factorize our numeric variables
 
 ```{r cleanup}
 ```
 
-Next, we convert the data to an object with class `transactions`, after viewing it again
+Lets see the results:
+
+```{r preprocessres}
+```
+
+
+Finally, we can set up our dataset to be the proper data format for the a priori algorithm:
 
 ```{r transact}
+str(data$hoursperweek)
 ```
+
 
 # Modeling and Evaluation
 
@@ -115,6 +160,7 @@ Before we begin with our analysis, lets check out the rule frequencies within th
 
 ```{r rulefreq}
 ```
+
 
 # Rule mining
 
