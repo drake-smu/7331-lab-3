@@ -8,16 +8,15 @@ library(data.table)
 
 
 ## @knitr datadef
-data("AdultUCI")
-dim(AdultUCI)
-AdultUCI
+dim(data)
+data
 
 ## @knitr cleanup
 #Dropping fnlwgt, education number, capgain/loss
 #also possible import for UCI data rather than arules version of dataset.
 #data <- read.csv("./data/adult-test.csv")
 
-data <- AdultUCI[, -c(3,5,11:12)]
+data <- data[, -c(3,5,11:12)]
 summary(data)
 
 #Lets look at NA value's first.
@@ -53,7 +52,7 @@ summary(data)
 itemFrequencyPlot(data, support=.2)
 ## @knitr rulemine
 #Now applying apriori for rule mining
-zerules <- apriori(data, parameter = list(minlen=2, supp=0.2, conf = 0.3), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F)) 
+zerules <- apriori(data, parameter = list(minlen=2, supp=0.2, conf = 0.15), appearance = list(rhs=c("income=small", "income=large"), default="lhs"),control = list(verbose=F)) 
 length(zerules)
 
 #remove redundants and sort by lift
