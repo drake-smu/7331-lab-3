@@ -10,16 +10,21 @@ data <- read.csv("./data/adult-training.csv")
 NA_sum <- sort(sapply(data, function(x) sum(is.na(x))), decreasing = TRUE)
 print(NA_sum)
 
-#remove whitespace from education
-levels(data$education) <- trimws(levels(data$education))
-levels(data$workclass) <- trimws(levels(data$workclass))
-levels(data$marital_status) <- trimws(levels(data$marital_status))
-levels(data$occupation) <- trimws(levels(data$occupation))
-levels(data$relationship) <- trimws(levels(data$relationship))
-levels(data$race) <- trimws(levels(data$race))
-levels(data$gender) <- trimws(levels(data$gender))
-levels(data$native_country) <- trimws(levels(data$native_country))
-levels(data$income_bracket) <- trimws(levels(data$income_bracket))
+# Get the names of the factor columns
+GetFactors <- function(df){
+  return(
+         names(Filter(is.factor,df))
+  )
+}
+
+# Remove whitespace from factor levels
+FixLevels <- function(x){
+  levels(x) <- trimws(levels(x))
+  return(x)
+}
+
+# Remove whitespace from all factors in the data frame
+data[GetFactors(data)]  <- lapply(data[GetFactors(data)], FixLevels)
 
 
 
