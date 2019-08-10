@@ -37,11 +37,8 @@ df$income_bracket <- fct_collapse(df$income_bracket,
 
 #remove ? and replace with other
 levels(df$workclass)[levels(df$workclass)=="?"] <- "Other"
-levels(df$workclass)[levels(df$workclass)==" (Other)"] <- "Other"
-
 levels(df$occupation)[levels(df$occupation)=="?"] <- "Other-service"
 levels(df$native_country)[levels(df$native_country)=="?"] <- "Other"
-levels(df$native_country)[levels(df$native_country)=="(Other)"] <- "Other"
 
 levels(df$workclass)
 summary(df)
