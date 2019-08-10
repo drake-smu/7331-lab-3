@@ -15,6 +15,7 @@ output:
 ---
 
 ```{r setup, echo = F}
+
 if (knitr::is_latex_output()) {
 	knitr::opts_chunk$set(dev = "tikz")
 }
@@ -26,6 +27,15 @@ knitr::opts_chunk$set(fig.align = "center")
 knitr::opts_chunk$set(comment = '#>')
 knitr::opts_chunk$set(fig.path = 'fig/')
 library(knitr)
+```
+
+```{r, echo = F}
+read_chunk('../analysis/preprocessing.R')
+
+```
+
+```{r dataclean}
+
 ```
 
 ```{r, echo = F}
@@ -81,7 +91,7 @@ Then we need to load our dataset, as well as examine it a bit
 ```{r datadef}
 ```
 
-Next lets get rid of some columns we are not going to use/that has some issues, and then lets break down our numeric variables into factors using `cut`
+Next lets get rid of some columns we are not going to use/that has some issues, look at some of the NA values, then break down our numeric variables into factors using `cut`
 
 ```{r cleanup}
 ```
