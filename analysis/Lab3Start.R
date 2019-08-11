@@ -76,7 +76,7 @@ plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
 ## @knitr redux
 
 rule2 <- apriori(data, 
-                 parameter = list(minlen=2, supp=0.1, conf = 0.9), 
+                 parameter = list(minlen=2, supp=0.01, conf = 0.6), 
                  appearance = list(rhs=c("income_bracket=small", "income_bracket=large"), default="lhs"),
                  control = list(verbose=F)) 
 length(rule2)
