@@ -283,6 +283,66 @@ We can see that this time around we've generated 36 rule's.  We'll put them thro
 ```{r gplo2}
 ```
 
+# Targeting Small and Large Income
+#### Small Income
+Now that we've scanned a couple of different variations of apriori and generated rules accordingly.  Lets split up the targeting in the rhs section to only target one of the income brackets at a time.  First we'll start with low income.  
+
+```{r small_income_rules}
+```
+
+```{r small_inspec}
+```
+
+It looks like we've generated 25 rules for the low income bracket.  Lets take a look at the scatter plot and find our releveant itemsets/rules 
+
+```{r small_plotscat}
+```
+
+We will discuss the results from small income targeting in the conclusion section.
+
+#### Large Income
+Our next step is to now target the large income bracket and see what rules shake out
+
+```{r large_income_rules}
+```
+
+```{r large_inspec}
+```
+
+It looks like we've generated 25 rules for the low income bracket.  Lets take a look at the scatter plot and find our releveant itemsets/rules 
+
+```{r large_plotscat}
+```
+
+We will discuss the results from large income targeting in the conclusion section.
+
+# Conclusion
+### Small Income
+* Not being married is associated with a low income. Out of our 25 best rules, 16 of them involved not being married, and our five highest lift rules all involved never married. This is clearly not a coincidence, however what this means and the cause of this is not so clear. We propose a few hypotheses about this:
+  * Married people, motivated by love, work harder and make more money
+
+  * Shallow society deems people without money harder to marry
+
+* People who are married got married because they are more social, and thus they are given more raises, perform better in interviews, etc. In contrast, people who were not sociable enough to meet someone may not perform as well in interviews etc., giving them fewer opportunities to get a job
+
+* Having just a diploma from high school does not get you out of the lower income bracket. This is unsurprising, as today you need in general a minimum of a college education to start making good money (and even that is difficult). 5 out of our 25 rules involved highest education level = high school diploma
+
+* 12 out of 25 rules involved being young. This makes perfect sense, as entry level jobs which young people get do not pay very well.
+
+* 8 out of 25 rules involved being in the private sector. This makes sense, as the private sector contains many low wage jobs. 
+
+* 4 out of 25 rules involved having a child. If you have a child, you ***should*** be spending more time with them, and maybe focusing a little less on your career. Therefore, you will probably earn less. This pattern makes sense.
+
+### Large Income
+
+Interesting large Income rules
+*	Thankfully, opposite to the small income analysis, large income targeting shows that being married greatly influences your income as it shows up in 9 of the 15 rules present.  Meaning again that by working as a team, you get more out of life.  So go find yourself a husband/wife.  
+
+*	The next highest frequent itemset is hard-working that shows up in 8 of the 15 rules.  Which makes perfect sense that the more time you put into a job, the likelier you are for promotion and advancement within an organization.  
+
+*	Education = Bachelors , native_country = United-States, relationship = husband are present in 5 out of the 15 rules.  
+
+
 # Deployment
 Be critical of your performance and tell the reader how you current model might
 be usable by other parties. Did you achieve your goals? If not, can you reign in
