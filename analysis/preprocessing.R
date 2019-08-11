@@ -4,6 +4,20 @@ library(pander)
 library(ggplot2)
 library(cowplot)
 
+## @knitr setup-02
+source('scripts/load-packages.R')
+if (knitr::is_latex_output()) {
+  knitr::opts_chunk$set(dev = "tikz")
+}
+knitr::opts_chunk$set(warning = F)
+# knitr::opts_knit$set(root.dir = "..")
+knitr::opts_chunk$set(message = F)
+knitr::opts_chunk$set(tidy = T, tidy.opts = list(comment = F))
+knitr::opts_chunk$set(fig.align = "center")
+knitr::opts_chunk$set(comment = '#>')
+knitr::opts_chunk$set(fig.path = 'fig/')
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
 ## @knitr dataimport
 data <- read.csv("./data/adult-training.csv")
 
@@ -15,9 +29,16 @@ data <- read.csv("./data/adult-training.csv")
 data <- data[, -c(3,5,11:12)]
 
 #Breaking down numerical categories to bins
-data$age <- cut(data$age, breaks = c(15,25,45,65,100), labels =c("Young", "Middleaged", "Senior", "Retired"))
-data$hours_per_week <- cut(data$hours_per_week, breaks = c(0,20,40,60,80), labels =c("part-time", "full-time", "hard-working", "need-a-life") )
-str(data)
+data$age <- cut(data$age, breaks = c(15,25,45,65,100), 
+                labels =c("Young", "Middleaged", "Senior", "Retired"))
+data$hours_per_week <- cut(data$hours_per_week, breaks = c(0,20,40,60,80), 
+                           labels =c("part-time", "full-time", "hard-working", "need-a-life") )
+library(magrittr)
+data %>% 
+  skim_to_list() %$%
+  factor %>% 
+  select(-c('ordered','missing','complete')) %>% 
+  kable
 
 ## @knitr dataqual
 #Lets look at NA value's first.
@@ -63,8 +84,10 @@ data$income_bracket <- fct_collapse(data$income_bracket,
 levels(data$workclass)[levels(data$workclass)=="?"] <- "Other"
 levels(data$occupation)[levels(data$occupation)=="?"] <- "Other-service"
 levels(data$native_country)[levels(data$native_country)=="?"] <- "Other"
+data[GetFactors(data)]  <- lapply(data[GetFactors(data)], FixLevels)
+pander(lapply(data[GetFactors(data)], levels))
 
-## @knitr preprocessres
+## @knitr preprocessers
 levels(data$workclass)
 pander(summary(data))
 

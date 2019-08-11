@@ -1,0 +1,43 @@
+---
+title: "Lab 3: Association Rules"
+author: "Che Cobb, Andy Heroy, Carson Drake, David Josephs"
+date: "`r Sys.Date()`"
+---
+
+```{r setup, echo = F}
+
+if (knitr::is_latex_output()) {
+	knitr::opts_chunk$set(dev = "tikz")
+}
+knitr::opts_chunk$set(warning = F)
+# knitr::opts_knit$set(root.dir = "..")
+knitr::opts_chunk$set(message = F)
+knitr::opts_chunk$set(tidy = T, tidy.opts = list(comment = F))
+knitr::opts_chunk$set(fig.align = "center")
+knitr::opts_chunk$set(comment = '#>')
+knitr::opts_chunk$set(fig.path = 'fig/')
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
+```
+
+
+```{r 01-business, child="01-business-understanding.Rmd"}
+```
+
+
+```{r 02-eda, child="02-eda.Rmd"}
+```
+
+```{r 03-model-eval, child="03-model-eval.Rmd"}
+```
+
+
+# Deployment
+Be critical of your performance and tell the reader how you current model might be usable by other parties. Did you achieve your goals? If not, can you reign in the utility of your modeling?
+
+• How useful is your model for interested parties (i.e., the companies or organizations that might want to use it)?
+• How would your deploy your model for interested parties?
+• What other data should be collected?
+• How often would the model need to be updated, etc.?
+
+# Exceptional Work

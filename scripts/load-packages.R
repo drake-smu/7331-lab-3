@@ -7,7 +7,7 @@
 # library(pander) # to pretty print some things
 #library(ggplot2) #For the plotting funs
 #library(cowplot) #For Gridtastic display
-
+options(repos='http://cran.rstudio.org')
 library(remotes)
 Crans = c(
   'arules',

@@ -1,5 +1,5 @@
 ---
-title: "Association Rules"
+title: "Lab 3: Association Rules"
 author: "Che Cobb, Andy Heroy, Carson Drake, David Josephs"
 date: "`r Sys.Date()`"
 output: 
@@ -42,7 +42,10 @@ Then we can begin our analysis
 
 # Business Understanding
 
-* [10 points] Describe the purpose of the data set you selected (i.e., why was this data bcollected in the first place?). How will you measure the effectiveness of a good algorithm? Why does your chosen validation method make sense for this specific dataset and the stakeholders needs?
+* [10 points] Describe the purpose of the data set you selected (i.e., why was
+this data bcollected in the first place?). How will you measure the
+effectiveness of a good algorithm? Why does your chosen validation method make
+sense for this specific dataset and the stakeholders needs?
 
 We chose this dataset from the UCI's machine learning repository for its categorical predictive attributes.  It contains 1994 Census data pulled from the US Census database.  The prediction task we've set forth is to predict if a person salary range is >50k in a 1994, based on the various categorical/numerical attributes in the census database. The link to the data source is below:
 
@@ -119,7 +122,10 @@ The first thing we must do is check and see if there are any NAs in our dataset,
 
 ## Data Cleaning
 
-Looks like we are doing ok here. The next issue we have in the dataset, is because of the way the csv was stored, some of the levels in our factors include leading and trailing whitespace. This is highly undesirable, so we must clean it up:
+Looks like we are doing ok here. The next issue we have in the dataset, is
+because of the way the csv was stored, some of the levels in our factors include
+leading and trailing whitespace. This is highly undesirable, so we must clean it
+up:
 
 ```{r factorclean}
 ```

@@ -1,0 +1,95 @@
+---
+title: "Modeling and Evaluation"
+output: html_document
+---
+
+```{r setup-3, echo = F}
+```
+
+```{r checnks-3,echo=F, tidy=F,comment=''}
+source("scripts/load-packages.R")
+read_chunk('analysis/preprocessing.R')
+read_chunk('analysis/Lab3Start.R')
+```
+
+# Modeling and Evaluation
+
+* Different tasks will require different evaluation methods. Be as thorough as possible when analyzing the data you have chosen and use visualizations of the results to explain the performance and expected outcomes whenever possible. Guide the reader through your analysis with plenty of discussion of the results. For this task, we chose Option B: Association Rule Mining.
+
+Option B: Association Rule Mining
+• Create frequent itemsets and association rules.
+• Use tables/visualization to discuss the found results.
+• Use several measure for evaluating how interesting different rules are.
+• Describe your results. What findings are the most compelling and why?
+
+Before we begin with our analysis, lets check out the rule frequencies within the dataset. We are looking for rules with `support >= .2`
+
+```{r rulefreq}
+```
+
+
+# Rule mining
+
+Next, lets mine some rules with the apriori algorithm, and then clean up redundant rules. We are still sorting out what to set the minsupp and minconf to.
+
+```{r rulemine}
+```
+
+## Rule quality and inspection
+
+Next, let us inspect the rules, and examine their quality
+
+```{r quality}
+```
+
+## Plots
+
+First lets view a scatterplot of our rules
+
+```{r scatterplot}
+```
+
+Next lets look at  a balloon plot
+
+```{r baloonplot}
+```
+
+Parallel plot
+
+```{r plplot}
+```
+
+Two key plot
+
+```{r kplot}
+```
+
+grouped plot
+
+```{r gplot}
+```
+
+# alternate rule mining
+
+```{r redux}
+```
+
+## Inspection
+
+```{r inspec}
+```
+
+## Plotting
+
+```{r plot2}
+```
+
+```{r bplo2}
+```
+
+
+```{r kplo2}
+```
+
+```{r gplo2}
+```
