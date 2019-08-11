@@ -11,14 +11,6 @@ library(data.table)
 dim(data)
 data
 
-##@knitr transact
-#Change the dataset to transactional
-data
-data <- as(data, "transactions")
-summary(data)
-#Now view it as  as a dataframe
-#as(data, "data.frame")
-
 ## @knitr rulefreq
 #Quick check of rule frequencies
 itemFrequencyPlot(data, support=.2)

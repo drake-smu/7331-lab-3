@@ -3,10 +3,12 @@ library(forcats)
 library(pander)
 library(ggplot2)
 library(cowplot)
-#------Data Specific Cleaning------------
 
 ## @knitr dataimport
 data <- read.csv("./data/adult-training.csv")
+
+
+#------Data Specific Cleaning------------
 
 ## @knitr cleanup
 #Dropping fnlwgt, education number, capgain/loss
@@ -65,6 +67,14 @@ levels(data$native_country)[levels(data$native_country)=="?"] <- "Other"
 ## @knitr preprocessres
 levels(data$workclass)
 pander(summary(data))
+
+##@knitr transact
+#Change the dataset to transactional
+data
+data <- as(data, "transactions")
+summary(data)
+#Now view it as  as a dataframe
+#as(data, "data.frame")
 
 ## @knitr EDAGraphs
 #Looking at Age
