@@ -42,20 +42,24 @@ length(rulesorted)
 
 ## @knitr quality
 (quality(rulesorted))
-inspectDT(rulesorted)
+inspectDT(rulesorted, caption="Association Rules")
 
 ## @knitr scatterplot
 #Scatter Plot
-plot(rulesorted, method = "scatterplot", measure = c("confidence", "support"), shading = "lift", engine = "htmlwidget")
+plot(rulesorted, method = "scatterplot", measure = c("confidence", "support"), 
+     shading = "lift", engine = "htmlwidget")
 ## @knitr baloonplot
 #Balloon plot
-plot(rulesorted, method="graph", measure= "confidence", shading = "lift", engine = "htmlwidget")
+plot(rulesorted, method="graph", measure= "confidence", shading = "lift",
+     engine = "htmlwidget")
 ## @knitr plplot
 #Parallel plot
-plot(rulesorted, method="paracoord", measure= "confidence", shading = "lift", control=list(reorder=T))
+plot(rulesorted, method="paracoord", measure= "confidence", shading = "lift", 
+     control=list(reorder=T))
 ## @knitr kplot
 #Two-key plot
-plot(rulesorted, method="two-key plot", measure = 'confidence', shading='lift', engine = "htmlwidget")
+plot(rulesorted, method="two-key plot", measure = 'confidence', shading='lift',
+     engine = "htmlwidget")
 ## @knitr gplot
 #grouped
 plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
