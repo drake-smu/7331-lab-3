@@ -11,3 +11,7 @@
 
 __pycache__
 .ropeproject
+.Rproj.user
+
+# cache and figs
+*/fig/**

@@ -20,13 +20,18 @@ if (knitr::is_latex_output()) {
 	knitr::opts_chunk$set(dev = "tikz")
 }
 knitr::opts_chunk$set(warning = F)
-knitr::opts_knit$set(root.dir = "..")
+# knitr::opts_knit$set(root.dir = "..")
 knitr::opts_chunk$set(message = F)
 knitr::opts_chunk$set(tidy = T, tidy.opts = list(comment = F))
 knitr::opts_chunk$set(fig.align = "center")
 knitr::opts_chunk$set(comment = '#>')
 knitr::opts_chunk$set(fig.path = 'fig/')
-library(knitr)
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
+```
+
+```{r, include=F}
+source("scripts/load-packages.R")
 ```
 
 # Project Overview
@@ -81,7 +86,7 @@ Here we will discuss each attribute and give some description about its ranges.
 
 First, lets go ahead and load up necessary libraries:
 
-```{r libraries, code = readLines("../libs.R")}
+```{r libraries, tidy=F,eval=FALSE, code = readLines('../scripts/load-packages.R')}
 ```
 
 
@@ -139,7 +144,7 @@ Lets see the results:
 ```
 
 
-Finally, we can set up our dataset to be the proper data format for the a priori algorithm:
+Finally, we can set up our dataset to be the proper data format for the Apriori algorithm:
 
 ```{r transact}
 str(data$hoursperweek)
