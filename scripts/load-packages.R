@@ -20,7 +20,9 @@ LabPackages = c(
   'skimr',
   'lubridate',
   'ggplot2',
-  'cowplot'
+  'cowplot',
+  'foreach',
+  'doParallel'
 )
 
 
