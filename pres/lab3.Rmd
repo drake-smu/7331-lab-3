@@ -239,7 +239,9 @@ Next lets look at a balloon plot
 ```{r baloonplot, fig.cap="Balloon Plot"}
 ```
 
-The balloon plot is able to filter and zoom, which gives the ability to look through each income group and see what rules are feeding the analysis.  Just by seperating out the large income bracket, we begin to see that married-civ-spouce has one of the highest lifts
+The balloon plot is able to filter and zoom, which gives the ability to look through each income group and see what rules are feeding the analysis.  Just by seperating out the large income bracket, we begin to see that married-civ-spouce has one of the highest lift scores.  The next two highest were white and Male.  Which follows suit with our above research as well. 
+
+In the small income bracket, we see rules such as (Never-married, fulltime), (female, private), (Private, never-married).  This would begins to tell us that if you're female, never-married and work full time, then you're chances are higher for making under 50k.  
 
 ```{r plplot, fig.cap="Parallel Plot"}
 ```
@@ -253,6 +255,8 @@ The balloon plot is able to filter and zoom, which gives the ability to look thr
 ```
 
 # Alternate Rule Mining
+
+After our first attempt at mining for rules, we're going to relax our support to 0.1 and increase our confidence to see what we get.  Aftewards, we'll target small and large incomes individually in order to see if we can isolate the itemsets that are going to be of highest influence. 
 
 ```{r redux}
 ```
