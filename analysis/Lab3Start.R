@@ -51,23 +51,33 @@ inspectDT(rulesorted, caption="Association Rules")
 
 ## @knitr scatterplot
 #Scatter Plot
-plot(rulesorted, method = "scatterplot", measure = c("confidence", "support"), 
-     shading = "lift", engine = "htmlwidget")
+plot(rulesorted, method = "scatterplot", 
+     measure = c("support","lift"), 
+     shading = "confidence", 
+     engine = "htmlwidget")
 ## @knitr baloonplot
 #Balloon plot
-plot(rulesorted, method="graph", measure= "confidence", shading = "lift",
+plot(rulesorted, method="graph", 
+     measure= "confidence", 
+     shading = "lift",
      engine = "htmlwidget")
 ## @knitr plplot
 #Parallel plot
-plot(rulesorted, method="paracoord", measure= "confidence", shading = "lift", 
+plot(rulesorted, method="paracoord", 
+     measure= "confidence", 
+     shading = "lift", 
      control=list(reorder=T))
 ## @knitr kplot
 #Two-key plot
-plot(rulesorted, method="two-key plot", measure = 'confidence', shading='lift',
+plot(rulesorted, method="two-key plot",
+     measure = "lift", 
+     shading = "confidence", 
      engine = "htmlwidget")
 ## @knitr gplot
 #grouped
-plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
+plot(rulesorted, method="grouped", 
+     measure = c("support","lift"), 
+     shading = "confidence")
 
 
 
@@ -104,19 +114,33 @@ inspectDT(rulesorted2,caption="Alternate Association Rules")
 
 
 ## @knitr plot2
-plot(rulesorted2, method = "scatterplot", measure = c("confidence","support"), shading = "lift", engine = "htmlwidget")
+plot(rulesorted2, method = "scatterplot", 
+     measure = c("support","lift"), 
+     shading = "confidence", 
+     engine = "htmlwidget")
 ## @knitr bplo2
 #Balloon plot
-plot(rulesorted2, method="graph", measure= "confidence", shading = "lift", engine = "htmlwidget")
+plot(rulesorted2, method="graph", 
+     measure= "confidence", 
+     shading = "lift", 
+     engine = "htmlwidget")
 ## @knitr pplo2
 #Parallel plot
-plot(rulesorted2, method="paracoord", measure= "confidence", shading = "lift", control=list(reorder=T))
+plot(rulesorted2, method="paracoord", 
+     measure= "confidence", 
+     shading = "lift", 
+     control=list(reorder=T))
 #Two-key plot
 ## @knitr kplo2
-plot(rulesorted2, method="two-key plot", measure = 'confidence', shading='lift', engine = "htmlwidget")
+plot(rulesorted2, method="two-key plot", 
+     measure = 'confidence', 
+     shading='lift', 
+     engine = "htmlwidget")
 #grouped
 ## @knitr gplo2
-plot(rulesorted2, method="grouped", measure = 'confidence', shading='lift')
+plot(rulesorted2, method="grouped", 
+     measure = c("support","lift"), 
+     shading = "confidence")
 
 ## @knitr small_income_rules
 #Targeting small income
