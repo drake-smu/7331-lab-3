@@ -31,7 +31,12 @@ itemFrequencyPlot(data, support=.2)
 
 ## @knitr rulemine
 #Now applying apriori for rule mining
-zerules <- apriori(data, parameter = list(minlen=2, supp=0.2, conf = 0.15), appearance = list(rhs=c("income_bracket=small", "income_bracket=large"), default="lhs"),control = list(verbose=F)) 
+zerules <- apriori(data, 
+                   parameter = list(minlen=2, supp=0.2, conf = 0.15),
+                   appearance = list(
+                     rhs=c("income_bracket=small", "income_bracket=large"), 
+                     default="lhs"),
+                   control = list(verbose=F)) 
 length(zerules)
 
 #remove redundants and sort by lift
@@ -81,7 +86,9 @@ plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
 
 rule2 <- apriori(data, 
                  parameter = list(minlen=2, supp=0.01, conf = 0.6), 
-                 appearance = list(rhs=c("income_bracket=small", "income_bracket=large"), default="lhs"),
+                 appearance = list(
+                   rhs=c("income_bracket=small", "income_bracket=large"), 
+                   default="lhs"),
                  control = list(verbose=F)) 
 length(rule2)
 
@@ -93,7 +100,7 @@ length(rulesorted2)
 
 ## @knitr inspec
 head(quality(rulesorted2))
-inspectDT(rulesorted2)
+inspectDT(rulesorted2,caption="Alternate Association Rules")
 
 
 ## @knitr plot2
