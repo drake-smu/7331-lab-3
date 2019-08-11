@@ -106,3 +106,47 @@ plot(rulesorted2, method="two-key plot", measure = 'confidence', shading='lift',
 #grouped
 ## @knitr gplo2
 plot(rulesorted2, method="grouped", measure = 'confidence', shading='lift')
+
+## @knitr small_income_rules
+#Targeting small income
+rule_small <- apriori(data, 
+                 parameter = list(minlen=2, supp=0.12, conf = 0.6), 
+                 appearance = list(rhs=c("income_bracket=small"), default="lhs"),
+                 control = list(verbose=F)) 
+length(rule_small)
+
+#remove redundants and sort by lift
+redundant <- is.redundant(rule_small)
+rulep <- rule_small[redundant == FALSE]
+rulesorted_small <- sort(rulep, by="lift", decreasing = TRUE)
+length(rulesorted_small)
+
+## @knitr small_inspec
+head(quality(rulesorted_small))
+inspectDT(rulesorted_small)
+
+## @knitr small_plotscat
+plot(rulesorted_small, method = "scatterplot", measure = c("confidence","support"), shading = "lift", engine = "htmlwidget")
+
+
+
+## @knitr large_income_rules
+#Targeting large income
+rule_large <- apriori(data, 
+                      parameter = list(minlen=2, supp=0.08, conf = 0.5), 
+                      appearance = list(rhs=c("income_bracket=large"), default="lhs"),
+                      control = list(verbose=F)) 
+length(rule_large)
+
+#remove redundants and sort by lift
+redundant <- is.redundant(rule_large)
+rulep <- rule_large[redundant == FALSE]
+rulesorted_large <- sort(rulep, by="lift", decreasing = TRUE)
+length(rulesorted_large)
+
+## @knitr large_inspec
+head(quality(rulesorted_large))
+inspectDT(rulesorted_large)
+
+## @knitr large_plotscat
+plot(rulesorted_large, method = "scatterplot", measure = c("confidence","support"), shading = "lift", engine = "htmlwidget")
