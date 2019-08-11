@@ -143,6 +143,14 @@ Lets see the results:
 ```{r preprocessres}
 ```
 
+# EDA
+
+We'd also like to get a quick feel for the dataset through some visulizations.
+
+```{r EDAGraphs}
+```
+
+####-TODO-Discuss graphs
 
 Finally, we can set up our dataset to be the proper data format for the Apriori algorithm:
 
@@ -181,7 +189,7 @@ Next, let us inspect the rules, and examine their quality
 ```{r quality}
 ```
 
-### Plots
+## Plots
 
 First lets view a scatterplot of our rules
 
@@ -232,3 +240,13 @@ grouped plot
 
 ```{r gplo2}
 ```
+
+# Deployment
+Be critical of your performance and tell the reader how you current model might be usable by other parties. Did you achieve your goals? If not, can you reign in the utility of your modeling?
+
+• How useful is your model for interested parties (i.e., the companies or organizations that might want to use it)?
+• How would your deploy your model for interested parties?
+• What other data should be collected?
+• How often would the model need to be updated, etc.?
+
+# Exceptional Work
