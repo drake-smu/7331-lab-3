@@ -92,48 +92,52 @@ levels(data$workclass)
 pander(summary(data))
 
 
-## @knitr EDAGraphs
+## @knitr EDAGraph1
 #Looking at Age
 p1 <- ggplot(data) + geom_bar(aes(x = age, fill=income_bracket), stat = "count") +
   labs(x = "Age", y = "Count", title = "Age by Income",
        subtitle = "Histogram plot")
+p1
 
+## @knitr EDAGraph2
 #Looking at education
 p2 <- ggplot(data, aes(x = education, fill = income_bracket, color = income_bracket)) +
   geom_bar(alpha = 0.9, position = "fill") +
   coord_flip() +
   labs(x = "Education", y = "Proportion", title = "Income bias based on Education",
        subtitle = "Stacked bar plot")
+p2
 
+## @knitr EDAGraph3
 #Marital Status
 p3 <- ggplot(data, aes(x = marital_status, fill = income_bracket, color = income_bracket)) +
   geom_bar(alpha = 0.9, position = "fill") +
   coord_flip() +
   labs(x = "Marital Status", y = "Proportion", title = "Income bias based on Marital status",
        subtitle = "Stacked bar plot")
+p3
 
+## @knitr EDAGraph4
 #Occupation
 p4 <- ggplot(data, aes(x = occupation, fill = income_bracket, color = income_bracket)) +
   geom_bar(alpha = 0.9, position = "fill") +
   coord_flip() +
   labs(x = "Occupation Status", y = "Proportion", title = "Income bias based on Occupation status",
        subtitle = "Stacked bar plot")
+p4
 
+## @knitr EDAGraph5
 #hours per week
 p5 <- ggplot(data, aes(x = hours_per_week, color = income_bracket)) +
   labs(x = "Hours per week", title = "Hours per week by Income",
        subtitle = "Density plot")
+p5
 
+## @knitr EDAGraph6
 #Occupation with Education
 p6 <- ggplot(data, aes(occupation)) +
   geom_bar(aes(fill=education), width = 0.5) +
   theme(axis.text.x = element_text(angle=60, vjust=0.5)) +
   labs(title="Histogram of occupation with education binning",
        subtitle="Occupation and Educational")
-
-p1
-p2
-p3
-p4
-p5
 p6

@@ -110,7 +110,7 @@ plot(rulesorted2, method="grouped", measure = 'confidence', shading='lift')
 ## @knitr small_income_rules
 #Targeting small income
 rule_small <- apriori(data, 
-                 parameter = list(minlen=2, supp=0.12, conf = 0.6), 
+                 parameter = list(minlen=2, supp=0.12, conf = 0.95), 
                  appearance = list(rhs=c("income_bracket=small"), default="lhs"),
                  control = list(verbose=F)) 
 length(rule_small)

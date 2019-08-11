@@ -161,7 +161,7 @@ Lets see the results:
 
 We'd also like to get a quick feel for the dataset through some visulizations.
 
-```{r EDAGraphs}
+```{r EDAGraph1}
 ```
 
 ####-TODO-Discuss graphs
@@ -169,7 +169,7 @@ We'd also like to get a quick feel for the dataset through some visulizations.
 Finally, we can set up our dataset to be the proper data format for the Apriori algorithm:
 
 ```{r transact}
-str(data$hoursperweek)
+str(data$hours_per_week)
 ```
 
 
