@@ -318,6 +318,9 @@ We will discuss the results from large income targeting in the conclusion sectio
 
 # Conclusion
 ### Small Income
+
+Interesting large Income rules:
+
 * Not being married is associated with a low income. Out of our 25 best rules, 16 of them involved not being married, and our five highest lift rules all involved never married. This is clearly not a coincidence, however what this means and the cause of this is not so clear. We propose a few hypotheses about this:
   * Married people, motivated by love, work harder and make more money
 
@@ -333,14 +336,19 @@ We will discuss the results from large income targeting in the conclusion sectio
 
 * 4 out of 25 rules involved having a child. If you have a child, you ***should*** be spending more time with them, and maybe focusing a little less on your career. Therefore, you will probably earn less. This pattern makes sense.
 
+* The rules for our small income target have a support of 12% and confidence of 95%. This means that (never-married, Diploma, Young, Private, and child) are observed in 12% of the dataset. We therefore believe that 95% of the time any of the attributes (never-married, Diploma, Young, Private, and child) are present, it will result in a small income.
+
 ### Large Income
 
-Interesting large Income rules
+Interesting large Income rules:
+
 *	Thankfully, opposite to the small income analysis, large income targeting shows that being married greatly influences your income as it shows up in 9 of the 15 rules present.  Meaning again that by working as a team, you get more out of life.  So go find yourself a husband/wife.  
 
 *	The next highest frequent itemset is hard-working that shows up in 8 of the 15 rules.  Which makes perfect sense that the more time you put into a job, the likelier you are for promotion and advancement within an organization.  
 
 *	Education = Bachelors , native_country = United-States, relationship = husband are present in 5 out of the 15 rules.  
+
+* The rules for our large income target have a support of 05% and confidence of 55%. This means that (married, hard-working, Bachelors, United-States, Husband) are observed in 5% of the dataset. We therefore believe that 55% of the time any of the attributes (married, hard-working, Bachelors, United-States, Husband) are present, it will result in a large income.
 
 
 # Deployment
