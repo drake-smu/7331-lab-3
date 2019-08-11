@@ -1,17 +1,23 @@
-## @knitr libs
-library(arules)
-library(arulesViz)
-# library(Hmisc)
-library(dplyr)
-library(plotly)
-library(data.table)
+## @knitr setup-03
+source('scripts/load-packages.R')
+if (knitr::is_latex_output()) {
+  knitr::opts_chunk$set(dev = "tikz")
+}
+knitr::opts_chunk$set(warning = F)
+# knitr::opts_knit$set(root.dir = "..")
+knitr::opts_chunk$set(message = F)
+knitr::opts_chunk$set(tidy = T, tidy.opts = list(comment = F))
+knitr::opts_chunk$set(fig.align = "center")
+knitr::opts_chunk$set(comment = '#>')
+knitr::opts_chunk$set(fig.path = 'fig/')
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 
 
 ## @knitr datadef
 dim(data)
 data
 
-##@knitr transact
+## @knitr transact
 #Change the dataset to transactional
 data
 data <- as(data, "transactions")
@@ -22,6 +28,7 @@ summary(data)
 ## @knitr rulefreq
 #Quick check of rule frequencies
 itemFrequencyPlot(data, support=.2)
+
 ## @knitr rulemine
 #Now applying apriori for rule mining
 zerules <- apriori(data, parameter = list(minlen=2, supp=0.2, conf = 0.15), appearance = list(rhs=c("income_bracket=small", "income_bracket=large"), default="lhs"),control = list(verbose=F)) 
