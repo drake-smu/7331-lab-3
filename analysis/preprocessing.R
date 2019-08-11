@@ -88,7 +88,7 @@ p4 <- ggplot(data, aes(x = occupation, fill = income_bracket, color = income_bra
 #hours per week
 p5 <- ggplot(data, aes(x = hours_per_week, color = income_bracket, fill = income_bracket)) + 
   geom_density(alpha = 0.9) +
-  labs(x = "Hours per week", y = "Density", title = "Gender Density by Income",
+  labs(x = "Hours per week", y = "Density", title = "Hours per week Density by Income",
        subtitle = "Density plot")
 
 #Occupation with Education
