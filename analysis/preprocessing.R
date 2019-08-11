@@ -98,9 +98,8 @@ p4 <- ggplot(data, aes(x = occupation, fill = income_bracket, color = income_bra
        subtitle = "Stacked bar plot")
 
 #hours per week
-p5 <- ggplot(data, aes(x = hours_per_week, color = income_bracket, fill = income_bracket)) + 
-  geom_density(alpha = 0.9) +
-  labs(x = "Hours per week", y = "Density", title = "Hours per week Density by Income",
+p5 <- ggplot(data, aes(x = hours_per_week, color = income_bracket)) +
+  labs(x = "Hours per week", title = "Hours per week by Income",
        subtitle = "Density plot")
 
 #Occupation with Education
@@ -110,7 +109,9 @@ p6 <- ggplot(data, aes(occupation)) +
   labs(title="Histogram of occupation with education binning",
        subtitle="Occupation and Educational")
 
-
-plot_grid(p1,p5, labels = "AUTO")
-plot_grid(p2,p4, labels = "AUTO")
+p1
+p2
+p3
+p4
+p5
 p6
