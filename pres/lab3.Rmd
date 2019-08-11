@@ -164,8 +164,29 @@ We'd also like to get a quick feel for the dataset through some visulizations.
 ```{r EDAGraph1}
 ```
 
-####-TODO-Discuss graphs
+Our first plot shows us a quick histogram of age groups and their income group.  Not surprisingly, the majority of the "large" income group is in middleaged and senior groups supporting the common knowledge that as you get older, you should be making more money. 
 
+```{r EDAGraph2}
+```
+
+Our next plot is a stacked bar chart of income group by density of education.  We see here that higher education (Bachelors, Masters, Doctorate) yields a higher proportions of the "large" income bracket.  Professional school also about equal with Docotorate suggesting specilaized trades and higher education are the best bet for making over 50k a year. 
+
+```{r EDAGraph3}
+```
+
+Using the similar plot style as above, we'll now look at income group by density of Marital Status.  Which too no surprise to us researchers, married couples have a distinct advantage over thoes that are unmarried.  In fact the next highest categories are Widowed and Divorced.  Which means, if you want to make more money in life, you should at least give marriage a try. 
+
+```{r EDAGraph4}
+```
+
+Next, we'll compare income groups by density of Occupation.  This revealed a few obvious, but also a few interesting results.  Exec-managerial and Prof-specialty were the highest categories to no one's surprise.  Protective-serv, transport-moving and tech-support also show good density for making over 50k.  Some of the lowest categories thought were Armed-Forces, and house-cleaning/services.  
+
+```{r EDAGraph6}
+```
+
+Lastly, we combine education and ocupation to see if we can notice any particular relationships between the two groups.  What kind of educations to the people with large incomes have?  Exec-managerial show a large amount of bachelor's and masters degree's, which means, more school definitely helps in that occupation.  Prof-specialty shows the best range of educational sectors respresented but we found it interesting that prof-school wasn't a larger representation here.  This is probably due to prof-specialty being a wider category than some in that you can be a professional in alot of different occupational sectors.
+
+Armed-forces have an extremely low amount of education information which also makes sense as most are recruited right out of high school.  We would have expected to see a higher amount of Diploma's given out in this group, but perhaps the information is just missing from this dataset. 
 Finally, we can set up our dataset to be the proper data format for the Apriori algorithm:
 
 ```{r transact}
