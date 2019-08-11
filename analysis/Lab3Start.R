@@ -85,7 +85,7 @@ plot(rulesorted, method="grouped", measure = 'confidence', shading='lift')
 ## @knitr redux
 
 rule2 <- apriori(data, 
-                 parameter = list(minlen=2, supp=0.1, conf = 0.6), 
+                 parameter = list(minlen=2, supp=0.1, conf = 0.98), 
                  appearance = list(
                    rhs=c("income_bracket=small", "income_bracket=large"), 
                    default="lhs"),
@@ -142,7 +142,7 @@ plot(rulesorted_small, method = "scatterplot", measure = c("confidence","support
 ## @knitr large_income_rules
 #Targeting large income
 rule_large <- apriori(data, 
-                      parameter = list(minlen=2, supp=0.08, conf = 0.5), 
+                      parameter = list(minlen=2, supp=0.05, conf = 0.55), 
                       appearance = list(rhs=c("income_bracket=large"), default="lhs"),
                       control = list(verbose=F)) 
 length(rule_large)
