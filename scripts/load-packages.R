@@ -5,6 +5,8 @@
 # library(plotly) # for interactive plots
 # library(data.table) # for speed
 # library(pander) # to pretty print some things
+#library(ggplot2) #For the plotting funs
+#library(cowplot) #For Gridtastic display
 
 LabPackages = c(
   'arules',
@@ -16,7 +18,9 @@ LabPackages = c(
   'pander',
   'knitr',
   'skimr',
-  'lubridate'
+  'lubridate',
+  'ggplot2',
+  'cowplot'
 )
 
 
