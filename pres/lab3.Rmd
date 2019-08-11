@@ -256,10 +256,12 @@ In the small income bracket, we see rules such as (Never-married, fulltime), (fe
 
 # Alternate Rule Mining
 
-After our first attempt at mining for rules, we're going to relax our support to 0.1 and increase our confidence to see what we get.  Aftewards, we'll target small and large incomes individually in order to see if we can isolate the itemsets that are going to be of highest influence. 
+After our first attempt at mining for rules, we're going to relax our support to 0.1 and increase our confidence to 98% see what we get.  Aftewards, we'll target small and large incomes individually in order to see if we can isolate the itemsets that are going to be of highest influence. 
 
 ```{r redux}
 ```
+
+We can see that this time around we've generated 36 rule's.  We'll put them through the same inspection and plots as previously to see if any other rules stand out or if we're seeing more of the same.  
 
 ## Inspection
 
