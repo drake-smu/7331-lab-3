@@ -53,6 +53,8 @@ https://archive.ics.uci.edu/ml/datasets/census+income
 
 The effectiveness of our algorithm will be determined by support, confidence and lift.  As these are the metrics that describe how strong a relationship between each element is with the other elements within each transaction.  Currently, there are no methods for cross validation of association rules, although there are some hard working individuals out there that are attempting to create such a tool.
 
+- TODO - ADD DEFINITION FOR LIFT/CONFIDENCE/SUPPORT HERE
+
 
 # Data Understanding
 * [10 points] Describe the meaning and type of data (scale, values, etc.) for each
@@ -237,6 +239,7 @@ Next lets look at a balloon plot
 ```{r baloonplot, fig.cap="Balloon Plot"}
 ```
 
+The balloon plot is able to filter and zoom, which gives the ability to look through each income group and see what rules are feeding the analysis.  Just by seperating out the large income bracket, we begin to see that married-civ-spouce has one of the highest lifts
 
 ```{r plplot, fig.cap="Parallel Plot"}
 ```
