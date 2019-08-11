@@ -71,10 +71,9 @@ pander(summary(data))
 
 ## @knitr EDAGraphs
 #Looking at Age
-p1 <- ggplot(data, aes(x = age, color = income_bracket, fill = income_bracket)) + 
-  geom_density(alpha = 0.9) +
-  labs(x = "Age", y = "Density", title = "Age Density by Income",
-       subtitle = "Density plot")
+p1 <- ggplot(data) + geom_bar(aes(x = age, fill=income_bracket), stat = "count") +
+  labs(x = "Age", y = "Count", title = "Age by Income",
+       subtitle = "Histogram plot")
 
 #Looking at education
 p2 <- ggplot(data, aes(x = education, fill = income_bracket, color = income_bracket)) +
