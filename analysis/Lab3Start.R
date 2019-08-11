@@ -19,7 +19,7 @@ data
 
 ## @knitr transact
 #Change the dataset to transactional
-data
+
 data <- as(data, "transactions")
 summary(data)
 #Now view it as  as a dataframe
