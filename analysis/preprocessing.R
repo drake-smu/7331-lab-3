@@ -8,6 +8,15 @@ library(cowplot)
 ## @knitr dataimport
 data <- read.csv("./data/adult-training.csv")
 
+## @knitr cleanup
+#Dropping fnlwgt, education number, capgain/loss
+data <- data[, -c(3,5,11:12)]
+
+#Breaking down numerical categories to bins
+data$age <- cut(data$age, breaks = c(15,25,45,65,100), labels =c("Young", "Middleaged", "Senior", "Retired"))
+data$hours_per_week <- cut(data$hours_per_week, breaks = c(0,20,40,60,80), labels =c("part-time", "full-time", "hard-working", "need-a-life") )
+str(data)
+
 ## @knitr dataqual
 #Lets look at NA value's first.
 NA_sum <- sort(sapply(data, function(x) sum(is.na(x))), decreasing = TRUE)

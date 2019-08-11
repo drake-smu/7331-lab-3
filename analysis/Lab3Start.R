@@ -11,25 +11,6 @@ library(data.table)
 dim(data)
 data
 
-## @knitr cleanup
-#Dropping fnlwgt, education number, capgain/loss
-#also possible import for UCI data rather than arules version of dataset.
-#data <- read.csv("./data/adult-test.csv")
-
-data <- data[, -c(3,5,11:12)]
-
-#Breaking down numerical categories to bins
-data$age <- cut(data$age, breaks = c(15,25,45,65,100), labels =c("Young", "Middleaged", "Senior", "Retired"))
-data$hours_per_week <- cut(data$hours_per_week, breaks = c(0,20,40,60,80), labels =c("part-time", "full-time", "hard-working", "need-a-life") )
-str(data)
-
-## @knitr whatevs
-#Lets look at NA value's first.
-NA_sum <- sort(sapply(data, function(x) sum(is.na(x))), decreasing = TRUE)
-print(NA_sum) 
-
-
-
 ##@knitr transact
 #Change the dataset to transactional
 data
