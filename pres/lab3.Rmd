@@ -30,9 +30,6 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 
 ```
 
-```{r, include=F}
-source("scripts/load-packages.R")
-```
 
 # Project Overview
 
@@ -86,7 +83,18 @@ Here we will discuss each attribute and give some description about its ranges.
 
 First, lets go ahead and load up necessary libraries:
 
-```{r libraries, tidy=F,eval=FALSE, code = readLines('../scripts/load-packages.R')}
+```{r libraries,echo=F, tidy=F, results='hold', comment=''}
+source("scripts/load-packages.R",echo=F,print.eval = T, 
+       skip.echo = 7,
+       spaced = F,prompt.echo='')
+
+writeLines(c("Loaded Packages:",
+             strwrap(
+               toString(LabPackages), 
+               width = 60,
+               indent = 3,
+               exdent = 3)
+             ))
 ```
 
 
