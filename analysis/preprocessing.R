@@ -61,7 +61,7 @@ pander(summary(data))
 #Looking at Age
 p1 <- ggplot(data, aes(x = age, color = income_bracket, fill = income_bracket)) + 
   geom_density(alpha = 0.9) +
-  labs(x = "Age", y = "Density", title = "The older you get, the more you make",
+  labs(x = "Age", y = "Density", title = "Age Density by Income",
        subtitle = "Density plot")
 
 #Looking at education
@@ -85,16 +85,20 @@ p4 <- ggplot(data, aes(x = occupation, fill = income_bracket, color = income_bra
   labs(x = "Occupation Status", y = "Proportion", title = "Income bias based on Occupation status",
        subtitle = "Stacked bar plot")
 
+#hours per week
+p5 <- ggplot(data, aes(x = hours_per_week, color = income_bracket, fill = income_bracket)) + 
+  geom_density(alpha = 0.9) +
+  labs(x = "Hours per week", y = "Density", title = "Gender Density by Income",
+       subtitle = "Density plot")
 
-# 
-# #Occupation
-# p4 <- ggplot(data, aes(education)) + 
-#   geom_bar(aes(fill=income_bracket), width = 0.5) + 
-#   theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
-#   labs(title="Histogram on Occupation", 
-#        subtitle="Occupation vs income")
+#Occupation with Education
+p6 <- ggplot(data, aes(occupation)) +
+  geom_bar(aes(fill=education), width = 0.5) +
+  theme(axis.text.x = element_text(angle=60, vjust=0.5)) +
+  labs(title="Histogram of occupation with education binning",
+       subtitle="Occupation and Educational")
 
-p1
-p2
-p3
-p4
+
+plot_grid(p1,p5, labels = "AUTO")
+plot_grid(p2,p4, labels = "AUTO")
+p6
