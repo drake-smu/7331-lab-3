@@ -44,23 +44,64 @@ this data bcollected in the first place?). How will you measure the
 effectiveness of a good algorithm? Why does your chosen validation method make
 sense for this specific dataset and the stakeholders needs?
 
+## Introduction {-}
+
 We chose this dataset from the UCI's machine learning repository for its
-categorical predictive attributes.  It contains 1994 Census data pulled from the
+categorical predictive attributes. It contains 1994 Census data pulled from the
 US Census database.  The prediction task we've set forth is to predict if a
 person salary range is >50k in a 1994, based on the various
 categorical/numerical attributes in the census database. The link to the data
 source is below:
 
-https://archive.ics.uci.edu/ml/datasets/census+income
+**UCI Census Dataset**: https://archive.ics.uci.edu/ml/datasets/census+income
 
-The effectiveness of our algorithm will be determined by support, confidence and
-lift.  As these are the metrics that describe how strong a relationship between
-each element is with the other elements within each transaction.  Currently,
-there are no methods for cross validation of association rules, although there
-are some hard working individuals out there that are attempting to create such a
-tool.
+This dataset is a collection of individual census records. For our analysis we 
+will be evaluating this collection of records as a set of transactions. Each of 
+the records, transactions, consists of multiple data points, attributes, which 
+we will consider as items. Using the Apriori Algorithm, we will mine the 
+transaction set for associations between itemsets within individual transactions. 
+These associations defined as rules in the form:   
 
-- TODO - ADD DEFINITION FOR LIFT/CONFIDENCE/SUPPORT HERE
+$$X\ \Rightarrow Y\ where\ X,Y\ are\ subsets\ of\ items\ in\ transaction,\ I$$
+The entire set of transactions is represented as $T$  
+
+The effectiveness of our association rules will be determined by support,
+confidence and lift. These metrics describe the strength of association between
+our rule's left-hand-side(LHS), antecedent, itemset($X$) and its
+right-hand-side(RHS), consequence($Y$). Since the rules generated in Association Mining are derived through observed associations, no casual connection between itemsets can be established. Also given a large enough dataset, random sperious association will arrise.
+
+### Definitions {-}
+
+#### Support {-}  
+
+$$\
+Support(\{X\}\ \Rightarrow \{Y\})\ =\ \frac{\#\ Transactions\ containing\ both\ X\ and\ Y}{Total\ \#\ transactions}\
+$$  
+Support is the measure of frequency itemset $X$ appears in $T$. A high support metric for a rule means that the itemset $X$ appears in a large portion of the overall transaction set. A low support metric means that the number of transactions containing this itemset are low, meaning it might not be very strong when generalizing.
+
+#### Confidence {-}  
+
+$$\
+Confidence(\{X\}\ \Rightarrow \{Y\})\ =\ \frac{\#\ Transactions\ containing\ both\ X\ and\ Y}{\#\ transactions\ containing\ X}
+$$
+The confidence describes the likeliness of $Y$ givent the presense of itemset $X$. It is the probability that a transaction will contain $Y$ given $X$. A high confidence value means that when the given rule is applicable, it is also 
+likely true. This metric is useful but can be misleading for evaluating the association of the rule.  
+
+#### Lift {-}
+
+$$\
+Lift(\{X\}\ \Rightarrow \{Y\})\ =\ \frac{(\
+\#\ Transactions\ containing\ both\ X\ and\ Y)/\
+(\#\ Transactions\ containing\ X)}{\
+Fraction\ of\ transactions\ containing\ Y}\
+$$
+
+Unlike confidence, lift takes into account the support of the $Y$. Lift provides the 
+conditional probability for $\{X\}$ given $\{Y\}$, while taking into account the 
+overall probability of $\{Y\}$ to be true in $T$ regardless of $\{X\}$. Unlike confidence 
+and support, lift is not measured on a 0-1 scale. Lift values less than 1 indicate 
+that the presence of $X$ actually negatively impacts likeliness of the consequence $Y$
+compared to the overall likeliness of $Y$ in $T$.
 
 
 # Data Understanding
