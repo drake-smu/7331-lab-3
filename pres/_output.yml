@@ -6,3 +6,4 @@ html_document:
   theme: paper
   df_print: paged
   keep_md: TRUE
+  code_folding: show
