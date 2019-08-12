@@ -421,3 +421,102 @@ the utility of your modeling?
 • How often would the model need to be updated, etc.?
 
 # Exceptional Work
+
+
+For our exceptional work, we decided to try and optimize the number of rules produced in our apriori algorithm with the RHS being both low and high income. We decided to further optimize it by finding the ruleset which would provide us the highest average lift, while being digestible. To do that, we implemented a fully parallelized grid search.
+
+## Building a Grid
+
+There are two parameters to optimize in the apriori algorithm: confidence and support. Normally, these are chosen using an in depth knowledge of the data combined with an understanding of the goals of the study. Because this research is purely academic, and we are new to the apriori algorithm, we do not have a prior understanding to tell us what support and confidence will be the most useful for us. So, we must optimize both. We will begin by creating two objects, `conf` and `supp`, for confidence and support respectively. Each will be vectors from 0.01 to 0.99:
+
+```{r}
+x <- 1:99
+conf <- supp <- x/100
+```
+
+Next, we will create a data frame containing all possible combinations of support and confidence:
+
+```{r}
+init <- data.frame(conf = conf, supp = supp)
+params  <- expand.grid(init)
+nrow(params)
+```
+
+## Defining the Search Function
+
+Next, we would like to create a function which we can iterate through. We would like the function to take in a value of support and confidence, maybe a value of appearance (but with defaults for our specific case) and run it through the apriori algorithm. Then, we would like it to prune redundant results from the rule, get the length and average lift of the ruleset, and return those in a convenient labeled vector:
+
+```{r}
+search <- function(sup,
+                    con, 
+                    appearance = list(rhs=c("income_bracket=small", "
+                                            income_bracket=large"), 
+                                      default="lhs")) {
+  rules <- apriori(transactions, parameter = list(minlen=2, supp=sup, conf = con) ,control = list(verbose=f)) 
+  redundant <- is.redundant(rules)
+  rulepruned <- rules[redundant == false]
+  rulelength  <- length(rules)
+  return(c(
+                    support = sup,
+                    conf = con,
+                    nrules = rulelength,
+                    avlift = mean(quality(rulepruned)$lift)
+                    ))
+}
+```
+
+## Performing the grid search
+
+We will perform the grid search in parallel, in two ways: using R's built in `parallel` library, utilizing a `FORK` cluster (not available on Windows), and using `doParallel` and `foreach`, with a `socket` cluster (cross platform).
+
+### Grid Search using `parallel`
+
+For this, we will use the `mcmapply` (multicore matrix apply). This takes a function, any number of vectors of equal length, pops those vectors into the function, and runs it over the specified number of cores. It outputs them in the form of a matrix, which we will transpose and turn into a data frame.
+
+```{r, eval = F}
+library(parallel)
+gs <- mcmapply(search, params[[1]], params[[2]], mc.cores = 12L)
+results <- data.frame(t(gs))
+```
+
+### Grid Search using `doParallel`
+
+We can use the amazing doParallel library to run our R code in parallel without process forking. Instead, it connects to your computer's CPUs using sockets, which work on all OS's. Because we are not using convenient process forking, we will have to do a little more work to set things up:
+
+```{r, eval = F}
+libary(doParallel)
+library(foreach)
+numCores <- parallel::detectCores()
+workers <- makeCluster(numCores-1) # makes a socket cluster, one less cores than on your computer
+invisible(clusterEvalQ(workers, library(arules))) # loads the arules library onto the cluster
+registerDoParallel(workers) # register our cluster for parallel computation
+```
+
+Now that we are set up with our cluster of CPUs, we can evaluate our grid search in parallel. Note here, we can specify how we combine our outputs. In this case we are going to combine them using rbind, to give the exact same results as our `results` object.
+
+```{r, eval = F}
+results <- foreach(i = 1:nrow(params), .combine = rbind) %dopar% {
+  search(params[i,1], params[i,2])
+}
+```
+
+```{r, echo = F}
+load("analysis/gridsearch.Rda")
+```
+
+## Viewing the Results
+
+We now must define what it means to be `digestible`. In my opinion, between 20 and 25 rules is clearly digestible to anyone. So we will find the rules created that give us that, and we want to also find the rulesets with the highest lift. We will do so using `dplyr`:
+
+```{r}
+digest <- results %>% 
+  filter(nrules <=25 & nrules >=20) %>%  
+  filter(conf > 0.35) %>%
+  filter(support >0.35) %>%
+  arrange(desc(avlift,nrules,support, conf))
+digest
+```
+
+Looks like we have a clear winner. We will now try
+
+
