@@ -454,6 +454,7 @@ Overall, i believe our group achieved the goals we set forth.  We learned the pr
   
   * Since we're dealing with Census data, a yearly update of the model would be sufficient to maintain its usefulness.
 
+
 # Exceptional Work
 
 
@@ -480,17 +481,19 @@ nrow(params)
 
 Next, we would like to create a function which we can iterate through. We would like the function to take in a value of support and confidence, maybe a value of appearance (but with defaults for our specific case) and run it through the apriori algorithm. Then, we would like it to prune redundant results from the rule, get the length and average lift of the ruleset, and return those in a convenient labeled vector:
 
-```{r}
-search <- function(sup,
-                    con, 
-                    appearance = list(rhs=c("income_bracket=small", "
-                                            income_bracket=large"), 
-                                      default="lhs")) {
-  rules <- apriori(transactions, parameter = list(minlen=2, supp=sup, conf = con) ,control = list(verbose=f)) 
+```{r, eval = F}
+transactions <- data
+search <- function(sup,con) {
+  rules <- apriori(data = data, 
+                   parameter = list(minlen = 2,conf=con, supp = sup),
+                   appearance = list(
+                                     rhs=c("income_bracket=small", "income_bracket=large"), 
+                                     default="lhs"),
+                   control = list(verbose=F)) 
   redundant <- is.redundant(rules)
-  rulepruned <- rules[redundant == false]
-  rulelength  <- length(rules)
-  return(c(
+  rulepruned <- rules[redundant == FALSE]
+  rulelength  <- length(rulepruned)
+  return(data.frame(
                     support = sup,
                     conf = con,
                     nrules = rulelength,
@@ -505,12 +508,13 @@ We will perform the grid search in parallel, in two ways: using R's built in `pa
 
 ### Grid Search using `parallel`
 
-For this, we will use the `mcmapply` (multicore matrix apply). This takes a function, any number of vectors of equal length, pops those vectors into the function, and runs it over the specified number of cores. It outputs them in the form of a matrix, which we will transpose and turn into a data frame.
+For this, we will use the `mcmapply` (multicore matrix apply). This takes a function, any number of vectors of equal length, pops those vectors into the function, and runs it over the specified number of cores. It outputs them in the form of a list, which we will turn into a data frame
+
 
 ```{r, eval = F}
 library(parallel)
-gs <- mcmapply(search, params[[1]], params[[2]], mc.cores = 12L)
-results <- data.frame(t(gs))
+gs <- mcmapply(search, params[[1]], params[[2]], mc.cores = 12L, SIMPLIFY = F)
+results <- do.call(rbind, gs)
 ```
 
 ### Grid Search using `doParallel`
@@ -535,7 +539,8 @@ results <- foreach(i = 1:nrow(params), .combine = rbind) %dopar% {
 ```
 
 ```{r, echo = F}
-load("analysis/gridsearch.Rda")
+load("pres/results.Rda")
+load("analysis/transact.Rda")
 ```
 
 ## Viewing the Results
@@ -543,14 +548,22 @@ load("analysis/gridsearch.Rda")
 We now must define what it means to be `digestible`. In my opinion, between 20 and 25 rules is clearly digestible to anyone. So we will find the rules created that give us that, and we want to also find the rulesets with the highest lift. We will do so using `dplyr`:
 
 ```{r}
-digest <- results %>% 
-  filter(nrules <=25 & nrules >=20) %>%  
-  filter(conf > 0.35) %>%
-  filter(support >0.35) %>%
-  arrange(desc(avlift,nrules,support, conf))
-digest
+results %>% arrange(desc(avlift)) %>% filter(nrules <=25) %>% filter(nrules >= 20) %>% filter(support > 0.2) %>% filter(conf > 0.2)
 ```
 
-Looks like we have a clear winner. We will now try
+Looks like we have a clear winner. We will now try the apriori algorithm using our parameters
+
+```{r}
+optimalRules <- apriori(data, 
+                   parameter = list(conf=0.24, supp = 0.21),
+                   appearance = list(
+                     rhs=c("income_bracket=small", "income_bracket=large"), 
+                     default="lhs"),
+                   control = list(verbose=F)) 
+redund <- is.redundant(optimalRules)
+optimalRules <- optimalRules[redund == F]
+sortedOptimalRules <- sort(optimalRules, by = "lift", decreasing = TRUE)
+inspectDT(sortedOptimalRules)
+```
 
 
