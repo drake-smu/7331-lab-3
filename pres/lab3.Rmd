@@ -1,4 +1,4 @@
-  ---
+---
 title: "Lab 3: Association Rules"
 author: "Che Cobb, Andy Heroy, Carson Drake, David Josephs"
 date: "`r Sys.Date()`"
@@ -12,7 +12,6 @@ output:
     theme: paper
     df_print: paged
     keep_md: TRUE
-
 ---
 
 ```{r setup, echo = F}
