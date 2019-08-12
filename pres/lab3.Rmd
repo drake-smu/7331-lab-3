@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 output: 
   html_document:
     toc: TRUE
+    number_sections: true
     toc_float:
       collapsed: true
       smooth_scroll: false
@@ -229,27 +230,62 @@ Next, let us inspect the rules, and examine their quality
 
 ## Plots
 
-First lets view a scatterplot of our rules
+### Scatterplot
 
 ```{r scatterplot, fig.cap="Scatter Plot"}
 ```
 
-Next lets look at a balloon plot
+#### Discussion
+
+This plot shows us each rule, with x axis as support and Y axis as lift. They are colored by confidence. This makes a nice little view of which rules were made from the most data. These may not always be the most interesting rules, but they are definitely the strongest ones. From looking at this, we can note a few strong, interesting associations.
+
+* Females are associated with low income bracket
+  * Conversely, being a male is (with low confidence) associated with a high income bracket. 
+
+* Not being married is strongly associated with a low income bracket
+
+* High school diploma only is associated with low income
+
+* Private/housekeeping/server jobs are associated with low income
+
+* No family is also associated with low income
+
+These strong rules are by no means earth-shattering, but they do tell us that we are looking in the right direction, as they agree with the (sometimes unfortunate) realities of the world we live in.
+
+
+### Balloon plot
 
 ```{r baloonplot, fig.cap="Balloon Plot"}
 ```
 
+#### Discussion
+
 The balloon plot is able to filter and zoom, which gives the ability to look through each income group and see what rules are feeding the analysis.  Just by seperating out the large income bracket, we begin to see that married-civ-spouce has one of the highest lift scores.  The next two highest were white and Male.  Which follows suit with our above research as well. 
 
-In the small income bracket, we see rules such as (Never-married, fulltime), (female, private), (Private, never-married).  This would begins to tell us that if you're female, never-married and work full time, then you're chances are higher for making under 50k.  
+In the small income bracket, we see rules such as (Never-married, fulltime), (female, private/housekeeper/server), (Private/housekeeper/server, never-married).  This would begins to tell us that if you're female, never-married and work full time, then you're chances are higher for making under 50k. It also says something negative 
+
+### Parallel plot
 
 ```{r plplot, fig.cap="Parallel Plot"}
 ```
 
+#### Discussion
+The width of the arrows represents support and the color represents confidence. We can see a few interesting things here. First of all, we have a striking level of confidence that being married gets you a large income, and then also interestingly we see that working as a private worker/housekeeper/server is a part of a lot of the rules related to being in the low income bracket (You can see this by looking where all the rules converge on LHS order 1).
+
+#### Two key plot
+
+This plot is often used to discuss the relationship between the order of the rules and their support/confidence.
 
 ```{r kplot, fig.cap="Two Key Plot"}
 ```
 
+#### Discussion
+
+We can find several interesting bits of information here. First, we see that we only produced one rule of order 4, a few rules of order 3, and a bunch of order 2. We also note that the area with high support and confidence (upper right, a bit of a sweet spot), is dominated by the shorter rules.
+
+### Grouped Matrix Plot
+
+This is a grouped matrix plot, which in this case is not interpretable or useful, but we will show it anyways
 
 ```{r gplot, fig.cap="Grouped Plot"}
 ```
@@ -332,11 +368,11 @@ Interesting large Income rules:
 
 * 12 out of 25 rules involved being young. This makes perfect sense, as entry level jobs which young people get do not pay very well.
 
-* 8 out of 25 rules involved being in the private sector. This makes sense, as the private sector contains many low wage jobs. 
+* 8 out of 25 rules involved being in the private /housekeeping/server field. This makes sense, as these workers are severly underpaid
 
 * 4 out of 25 rules involved having a child. If you have a child, you ***should*** be spending more time with them, and maybe focusing a little less on your career. Therefore, you will probably earn less. This pattern makes sense.
 
-* The rules for our small income target have a support of 12% and confidence of 95%. This means that (never-married, Diploma, Young, Private, and child) are observed in 12% of the dataset. We therefore believe that 95% of the time any of the attributes (never-married, Diploma, Young, Private, and child) are present, it will result in a small income.
+* The rules for our small income target have a support of 12% and confidence of 95%. This means that (never-married, Diploma, Young, Private/housekeeper/server, and child) are observed in 12% of the dataset. We therefore believe that 95% of the time any of the attributes (never-married, Diploma, Young, Private/housekeeper/server, and child) are present, it will result in a small income.
 
 ### Large Income
 
