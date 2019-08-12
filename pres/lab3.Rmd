@@ -239,9 +239,16 @@ Next lets look at a balloon plot
 ```{r baloonplot, fig.cap="Balloon Plot"}
 ```
 
-The balloon plot is able to filter and zoom, which gives the ability to look through each income group and see what rules are feeding the analysis.  Just by seperating out the large income bracket, we begin to see that married-civ-spouce has one of the highest lift scores.  The next two highest were white and Male.  Which follows suit with our above research as well. 
+The balloon plot is able to filter and zoom, which gives the ability to look
+through each income group and see what rules are feeding the analysis.  Just by
+seperating out the large income bracket, we begin to see that married-civ-spouce
+has one of the highest lift scores.  The next two highest were white and Male.
+Which follows suit with our above research as well.
 
-In the small income bracket, we see rules such as (Never-married, fulltime), (female, private), (Private, never-married).  This would begins to tell us that if you're female, never-married and work full time, then you're chances are higher for making under 50k.  
+In the small income bracket, we see rules such as (Never-married, fulltime),
+(female, private), (Private, never-married).  This would begins to tell us that
+if you're female, never-married and work full time, then you're chances are
+higher for making under 50k.
 
 ```{r plplot, fig.cap="Parallel Plot"}
 ```
@@ -256,12 +263,17 @@ In the small income bracket, we see rules such as (Never-married, fulltime), (fe
 
 # Alternate Rule Mining
 
-After our first attempt at mining for rules, we're going to relax our support to 0.1 and increase our confidence to 98% see what we get.  Aftewards, we'll target small and large incomes individually in order to see if we can isolate the itemsets that are going to be of highest influence. 
+After our first attempt at mining for rules, we're going to relax our support to
+0.1 and increase our confidence to 98% see what we get.  Aftewards, we'll target
+small and large incomes individually in order to see if we can isolate the
+itemsets that are going to be of highest influence.
 
 ```{r redux}
 ```
 
-We can see that this time around we've generated 36 rule's.  We'll put them through the same inspection and plots as previously to see if any other rules stand out or if we're seeing more of the same.  
+We can see that this time around we've generated 36 rule's.  We'll put them
+through the same inspection and plots as previously to see if any other rules
+stand out or if we're seeing more of the same.
 
 ## Inspection
 
@@ -283,9 +295,13 @@ We can see that this time around we've generated 36 rule's.  We'll put them thro
 ```{r gplo2}
 ```
 
-# Targeting Small and Large Income
+# Targeting Small and Large Income  
+
 #### Small Income
-Now that we've scanned a couple of different variations of apriori and generated rules accordingly.  Lets split up the targeting in the rhs section to only target one of the income brackets at a time.  First we'll start with low income.  
+
+Now that we've scanned a couple of different variations of apriori and generated
+rules accordingly.  Lets split up the targeting in the rhs section to only
+target one of the income brackets at a time.  First we'll start with low income.
 
 ```{r small_income_rules}
 ```
@@ -293,7 +309,8 @@ Now that we've scanned a couple of different variations of apriori and generated
 ```{r small_inspec}
 ```
 
-It looks like we've generated 25 rules for the low income bracket.  Lets take a look at the scatter plot and find our releveant itemsets/rules 
+It looks like we've generated 25 rules for the low income bracket.  Lets take a
+look at the scatter plot and find our releveant itemsets/rules
 
 ```{r small_plotscat}
 ```
@@ -301,7 +318,9 @@ It looks like we've generated 25 rules for the low income bracket.  Lets take a 
 We will discuss the results from small income targeting in the conclusion section.
 
 #### Large Income
-Our next step is to now target the large income bracket and see what rules shake out
+
+Our next step is to now target the large income bracket and see what rules shake
+out
 
 ```{r large_income_rules}
 ```
@@ -309,12 +328,14 @@ Our next step is to now target the large income bracket and see what rules shake
 ```{r large_inspec}
 ```
 
-It looks like we've generated 25 rules for the low income bracket.  Lets take a look at the scatter plot and find our releveant itemsets/rules 
+It looks like we've generated 25 rules for the low income bracket.  Lets take a
+look at the scatter plot and find our releveant itemsets/rules
 
 ```{r large_plotscat}
 ```
 
-We will discuss the results from large income targeting in the conclusion section.
+We will discuss the results from large income targeting in the conclusion
+section.
 
 # Conclusion
 ### Small Income
