@@ -64,7 +64,7 @@ sense for this specific dataset and the stakeholders needs?
 We chose this dataset from the UCI's machine learning repository for its
 categorical predictive attributes. It contains 1994 Census data pulled from the
 US Census database.  The prediction task we've set forth is to predict if a
-person salary range is >50k in a 1994, based on the various
+person salary range is >50k in 1994, based on the various
 categorical/numerical attributes in the census database. The link to the data
 source is below:
 
@@ -83,7 +83,7 @@ The entire set of transactions is represented as $T$
 The effectiveness of our association rules will be determined by support,
 confidence and lift. These metrics describe the strength of association between
 our rule's left-hand-side(LHS), antecedent, itemset($X$) and its
-right-hand-side(RHS), consequence($Y$). Since the rules generated in Association Mining are derived through observed associations, no casual connection between itemsets can be established. Also given a large enough dataset, random sperious association will arrise.
+right-hand-side(RHS), consequence($Y$). Since the rules generated in Association Mining are derived through observed associations, no causal connection between itemsets can be established. Also given a large enough dataset, random spurious association will arise.
 
 ### Definitions {-}
 
@@ -99,7 +99,7 @@ Support is the measure of frequency itemset $X$ appears in $T$. A high support m
 $$\
 Confidence(\{X\}\ \Rightarrow \{Y\})\ =\ \frac{\#\ Transactions\ containing\ both\ X\ and\ Y}{\#\ transactions\ containing\ X}
 $$
-The confidence describes the likeliness of $Y$ givent the presense of itemset $X$. It is the probability that a transaction will contain $Y$ given $X$. A high confidence value means that when the given rule is applicable, it is also 
+The confidence describes the likeliness of $Y$ given the presence of itemset $X$. It is the probability that a transaction will contain $Y$ given $X$. A high confidence value means that when the given rule is applicable, it is also 
 likely true. This metric is useful but can be misleading for evaluating the association of the rule.  
 
 #### Lift {-}
@@ -567,7 +567,7 @@ out of our 25 rules involved highest education level = high school diploma
 level jobs which young people get do not pay very well.
 
 * 8 out of 25 rules involved being in the private /housekeeping/server field.
-This makes sense, as these workers are severly underpaid
+This makes sense, as these workers are severely underpaid
 
 * 4 out of 25 rules involved having a child. If you have a child, you
 ***should*** be spending more time with them, and maybe focusing a little less
@@ -620,13 +620,13 @@ organizations that might want to use it)?
 * How often would the model need to be updated, etc.?
 
 Our current model, wouldn't be a good option for a production environment.
-Granted, there is astounding amounts of transacational data out there that can
+Granted, there is astounding amounts of transactional data out there that can
 benefit from apriori and associative rule mining.  Due to the trial and error
 used to isolate various rules and itemsets.  We're not confident that a new
 dataset will have any similar behavior or show similar itemsets. It is probably
 best used for the 1990 data on which it was created.
 
-Overall, i believe our group achieved the goals we set forth.  We learned the
+Overall, I believe our group achieved the goals we set forth.  We learned the
 process of associative rule mining, discovered new trends and validated those
 previously seen throughout our analysis of this dataset.  We're satisfied that
 we've created a useful model for anyone who was looking to analyze Census Data.
