@@ -437,10 +437,25 @@ Be critical of your performance and tell the reader how you current model might
 be usable by other parties. Did you achieve your goals? If not, can you reign in
 the utility of your modeling?
 
-• How useful is your model for interested parties (i.e., the companies or organizations that might want to use it)?
-• How would your deploy your model for interested parties?
-• What other data should be collected?
-• How often would the model need to be updated, etc.?
+* How useful is your model for interested parties (i.e., the companies or organizations that might want to use it)?
+
+* How would your deploy your model for interested parties?
+
+* What other data should be collected?
+
+* How often would the model need to be updated, etc.?
+
+Our current model, wouldn't be a good option for a production environment.  Granted, there is astounding amounts of transacational data out there that can benefit from apriori and associative rule mining.  Due to the trial and error used to isolate various rules and itemsets.  We're not confident that a new dataset will have any similar behavior or show similar itemsets. It is probably best used for the 1990 data on which it was created.  
+
+Overall, i believe our group achieved the goals we set forth.  We learned the process of associative rule mining, discovered new trends and validated those previously seen throughout our analysis of this dataset.  We're satisfied that we've created a useful model for anyone who was looking to analyze Census Data.
+
+  * Interested parties for this dataset could be activist, feminist, political campaigns, or others looking to change public policy through validation of its inhabitants characteristics. The model would theoretically work for other years of Census data (with light variable tweaking), it could also be applied to look for time series trends. 
+  
+  * TODO - DON'T KNOW WHAT TO SAY HERE.
+  
+  * Other data would consist of supplying other years of Census Data to see how if similar rulesets appear over time. Pairing this dataset with economic information could also prove beneficial as i'm sure the economy would influence unemployment rate, salaries in various industries, and a multitude of other factors that influence people's income.  
+  
+  * Since we're dealing with Census data, a yearly update of the model would be sufficient to maintain its usefulness.
 
 # Exceptional Work
 
