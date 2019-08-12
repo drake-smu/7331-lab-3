@@ -173,7 +173,7 @@ Our next plot is a stacked bar chart of income group by density of education.  W
 ```{r EDAGraph3}
 ```
 
-Using the similar plot style as above, we'll now look at income group by density of Marital Status.  Which too no surprise to us researchers, married couples have a distinct advantage over thoes that are unmarried.  In fact the next highest categories are Widowed and Divorced.  Which means, if you want to make more money in life, you should at least give marriage a try. 
+Using the similar plot style as above, we'll now look at income group by density of Marital Status.  Which too no surprise to us researchers, married couples have a distinct advantage over those that are unmarried.  In fact, the next highest categories are Widowed and Divorced.  Which means, if you want to make more money in life, you should at least give marriage a try. 
 
 ```{r EDAGraph4}
 ```
@@ -199,9 +199,13 @@ Finally, we can set up our dataset as a transactional dataset to be in the prope
 * Different tasks will require different evaluation methods. Be as thorough as possible when analyzing the data you have chosen and use visualizations of the results to explain the performance and expected outcomes whenever possible. Guide the reader through your analysis with plenty of discussion of the results. For this task, we chose Option B: Association Rule Mining.
 
 Option B: Association Rule Mining
+
 • Create frequent itemsets and association rules.
+
 • Use tables/visualization to discuss the found results.
+
 • Use several measure for evaluating how interesting different rules are.
+
 • Describe your results. What findings are the most compelling and why?
 
 Before we begin with our analysis, lets check out the rule frequencies within the dataset. We are looking for rules with `support >= .2`
@@ -265,9 +269,9 @@ Which follows suit with our above research as well.
 
 In the small income bracket, we see rules such as (Never-married, fulltime),
 (female, private/housekeeper/server), (Private/housekeeper/server,
-never-married).  This would begins to tell us that if you're female,
+never-married).  This would begin to tell us that if you're female,
 never-married and work full time, then you're chances are higher for making
-under 50k. It also says something negative 
+under 50k. 
 
 ### Parallel plot
 
@@ -316,7 +320,7 @@ stand out or if we're seeing more of the same.
 
 #### Discussion
 
-We see similar results as in section 8.2.1. 
+We see similar results as in section 7.2.1. 
 
 * Never being married has a strong association with low income.
 
@@ -400,6 +404,7 @@ section.
 Interesting small Income rules:
 
 * Not being married is associated with a low income. Out of our 25 best rules, 16 of them involved not being married, and our five highest lift rules all involved never married. This is clearly not a coincidence, however what this means and the cause of this is not so clear. We propose a few hypotheses about this:
+
   * Married people, motivated by love, work harder and make more money
 
   * Shallow society deems people without money harder to marry
