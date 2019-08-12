@@ -59,19 +59,73 @@ this data bcollected in the first place?). How will you measure the
 effectiveness of a good algorithm? Why does your chosen validation method make
 sense for this specific dataset and the stakeholders needs?
 
-We chose this dataset from the UCI's machine learning repository for its categorical predictive attributes.  It contains 1994 Census data pulled from the US Census database.  The prediction task we've set forth is to predict if a person salary range is >50k in a 1994, based on the various categorical/numerical attributes in the census database. The link to the data source is below:
+## Introduction {-}
 
-https://archive.ics.uci.edu/ml/datasets/census+income
+We chose this dataset from the UCI's machine learning repository for its
+categorical predictive attributes. It contains 1994 Census data pulled from the
+US Census database.  The prediction task we've set forth is to predict if a
+person salary range is >50k in a 1994, based on the various
+categorical/numerical attributes in the census database. The link to the data
+source is below:
 
-The effectiveness of our algorithm will be determined by support, confidence and lift.  As these are the metrics that describe how strong a relationship between each element is with the other elements within each transaction.  Currently, there are no methods for cross validation of association rules, although there are some hard working individuals out there that are attempting to create such a tool.
+**UCI Census Dataset**: https://archive.ics.uci.edu/ml/datasets/census+income
 
-- TODO - ADD DEFINITION FOR LIFT/CONFIDENCE/SUPPORT HERE
+This dataset is a collection of individual census records. For our analysis we 
+will be evaluating this collection of records as a set of transactions. Each of 
+the records, transactions, consists of multiple data points, attributes, which 
+we will consider as items. Using the Apriori Algorithm, we will mine the 
+transaction set for associations between itemsets within individual transactions. 
+These associations defined as rules in the form:   
+
+$$X\ \Rightarrow Y\ where\ X,Y\ are\ subsets\ of\ items\ in\ transaction,\ I$$
+The entire set of transactions is represented as $T$  
+
+The effectiveness of our association rules will be determined by support,
+confidence and lift. These metrics describe the strength of association between
+our rule's left-hand-side(LHS), antecedent, itemset($X$) and its
+right-hand-side(RHS), consequence($Y$). Since the rules generated in Association Mining are derived through observed associations, no casual connection between itemsets can be established. Also given a large enough dataset, random sperious association will arrise.
+
+### Definitions {-}
+
+#### Support {-}  
+
+$$\
+Support(\{X\}\ \Rightarrow \{Y\})\ =\ \frac{\#\ Transactions\ containing\ both\ X\ and\ Y}{Total\ \#\ transactions}\
+$$  
+Support is the measure of frequency itemset $X$ appears in $T$. A high support metric for a rule means that the itemset $X$ appears in a large portion of the overall transaction set. A low support metric means that the number of transactions containing this itemset are low, meaning it might not be very strong when generalizing.
+
+#### Confidence {-}  
+
+$$\
+Confidence(\{X\}\ \Rightarrow \{Y\})\ =\ \frac{\#\ Transactions\ containing\ both\ X\ and\ Y}{\#\ transactions\ containing\ X}
+$$
+The confidence describes the likeliness of $Y$ givent the presense of itemset $X$. It is the probability that a transaction will contain $Y$ given $X$. A high confidence value means that when the given rule is applicable, it is also 
+likely true. This metric is useful but can be misleading for evaluating the association of the rule.  
+
+#### Lift {-}
+
+$$\
+Lift(\{X\}\ \Rightarrow \{Y\})\ =\ \frac{(\
+\#\ Transactions\ containing\ both\ X\ and\ Y)/\
+(\#\ Transactions\ containing\ X)}{\
+Fraction\ of\ transactions\ containing\ Y}\
+$$
+
+Unlike confidence, lift takes into account the support of the $Y$. Lift provides the 
+conditional probability for $\{X\}$ given $\{Y\}$, while taking into account the 
+overall probability of $\{Y\}$ to be true in $T$ regardless of $\{X\}$. Unlike confidence 
+and support, lift is not measured on a 0-1 scale. Lift values less than 1 indicate 
+that the presence of $X$ actually negatively impacts likeliness of the consequence $Y$
+compared to the overall likeliness of $Y$ in $T$.
 
 
 # Data Understanding
-* [10 points] Describe the meaning and type of data (scale, values, etc.) for each
-attribute in the data file. Verify data quality: Are there missing values? Duplicate data? Outliers? Are those mistakes? How do you deal with these problems?
-* [10 points] Visualize the any important attributes appropriately. Important: Provide an interpretation for any charts or graphs.
+* [10 points] Describe the meaning and type of data (scale, values, etc.) for
+each attribute in the data file. Verify data quality: Are there missing values?
+Duplicate data? Outliers? Are those mistakes? How do you deal with these
+problems?
+* [10 points] Visualize the any important attributes appropriately. Important:
+Provide an interpretation for any charts or graphs.
 
 Here we will discuss each attribute and give some description about its ranges.
  
@@ -128,7 +182,8 @@ Next, lets import our dataset
 
 ## Data Quality Inspection
 
-The first thing we must do is check and see if there are any NAs in our dataset, just to make sure to not mess up our analysis.
+The first thing we must do is check and see if there are any NAs in our dataset,
+just to make sure to not mess up our analysis.
 
 ```{r dataqual}
 ```
@@ -144,7 +199,9 @@ up:
 ```{r factorclean}
 ```
 
-Next, we need to reencode our data as factors. First, lets encode the education levels into factors with larger groups (for example 1st-12th grade should be no diploma, not a bunch of levels).
+Next, we need to reencode our data as factors. First, lets encode the education
+levels into factors with larger groups (for example 1st-12th grade should be no
+diploma, not a bunch of levels).
 
 ```{r edubin}
 ```
@@ -161,7 +218,9 @@ lapply(data[GetFactors(data)], FixLevels)
 ```
 
 
-Next, lets remove the fnlwgt, education number, and capital gain and loss columns, as they are unneeded. We also need to rename some columns to be easier for us, and use the `cut` function to factorize our numeric variables
+Next, lets remove the fnlwgt, education number, and capital gain and loss
+columns, as they are unneeded. We also need to rename some columns to be easier
+for us, and use the `cut` function to factorize our numeric variables
 
 ```{r cleanup}
 ```
@@ -178,40 +237,72 @@ We'd also like to get a quick feel for the dataset through some visulizations.
 ```{r EDAGraph1}
 ```
 
-Our first plot shows us a quick histogram of age groups and their income group.  Not surprisingly, the majority of the "large" income group is in middleaged and senior groups supporting the common knowledge that as you get older, you should be making more money. 
+Our first plot shows us a quick histogram of age groups and their income group.
+Not surprisingly, the majority of the "large" income group is in middleaged and
+senior groups supporting the common knowledge that as you get older, you should
+be making more money.
 
 ```{r EDAGraph2}
 ```
 
-Our next plot is a stacked bar chart of income group by density of education.  We see here that higher education (Bachelors, Masters, Doctorate) yields a higher proportions of the "large" income bracket.  Professional school also about equal with Docotorate suggesting specilaized trades and higher education are the best bet for making over 50k a year. 
+Our next plot is a stacked bar chart of income group by density of education.
+We see here that higher education (Bachelors, Masters, Doctorate) yields a
+higher proportions of the "large" income bracket.  Professional school also
+about equal with Docotorate suggesting specilaized trades and higher education
+are the best bet for making over 50k a year.
 
 ```{r EDAGraph3}
 ```
 
-Using the similar plot style as above, we'll now look at income group by density of Marital Status.  Which too no surprise to us researchers, married couples have a distinct advantage over those that are unmarried.  In fact, the next highest categories are Widowed and Divorced.  Which means, if you want to make more money in life, you should at least give marriage a try. 
+Using the similar plot style as above, we'll now look at income group by density
+of Marital Status.  Which too no surprise to us researchers, married couples
+have a distinct advantage over thoes that are unmarried.  In fact the next
+highest categories are Widowed and Divorced.  Which means, if you want to make
+more money in life, you should at least give marriage a try.
+
 
 ```{r EDAGraph4}
 ```
 
-Next, we'll compare income groups by density of Occupation.  This revealed a few obvious, but also a few interesting results.  Exec-managerial and Prof-specialty were the highest categories to no one's surprise.  Protective-serv, transport-moving and tech-support also show good density for making over 50k.  Some of the lowest categories thought were Armed-Forces, and house-cleaning/services.  
+Next, we'll compare income groups by density of Occupation.  This revealed a few
+obvious, but also a few interesting results.  Exec-managerial and Prof-specialty
+were the highest categories to no one's surprise.  Protective-serv,
+transport-moving and tech-support also show good density for making over 50k.
+Some of the lowest categories thought were Armed-Forces, and
+house-cleaning/services.
 
 ```{r EDAGraph6}
 ```
 
-Lastly, we combine education and ocupation to see if we can notice any particular relationships between the two groups.  What kind of educations to the people with large incomes have?  Exec-managerial show a large amount of bachelor's and masters degree's, which means, more school definitely helps in that occupation.  Prof-specialty shows the best range of educational sectors respresented but we found it interesting that prof-school wasn't a larger representation here.  This is probably due to prof-specialty being a wider category than some in that you can be a professional in alot of different occupational sectors.
+Lastly, we combine education and ocupation to see if we can notice any
+particular relationships between the two groups.  What kind of educations to the
+people with large incomes have?  Exec-managerial show a large amount of
+bachelor's and masters degree's, which means, more school definitely helps in
+that occupation.  Prof-specialty shows the best range of educational sectors
+respresented but we found it interesting that prof-school wasn't a larger
+representation here.  This is probably due to prof-specialty being a wider
+category than some in that you can be a professional in alot of different
+occupational sectors.
 
-Armed-forces have an extremely low amount of education information which also makes sense as most are recruited right out of high school.  We would have expected to see a higher amount of Diploma's given out in this group, but perhaps the information is just missing from this dataset. 
+Armed-forces have an extremely low amount of education information which also
+makes sense as most are recruited right out of high school.  We would have
+expected to see a higher amount of Diploma's given out in this group, but
+perhaps the information is just missing from this dataset.
 
-Finally, we can set up our dataset as a transactional dataset to be in the proper data format for the Apriori algorithm:  
+Finally, we can set up our dataset as a transactional dataset to be in the
+proper data format for the Apriori algorithm:
 
 ```{r transact}
-
 ```
 
 
 # Modeling and Evaluation
 
-* Different tasks will require different evaluation methods. Be as thorough as possible when analyzing the data you have chosen and use visualizations of the results to explain the performance and expected outcomes whenever possible. Guide the reader through your analysis with plenty of discussion of the results. For this task, we chose Option B: Association Rule Mining.
+* Different tasks will require different evaluation methods. Be as thorough as
+possible when analyzing the data you have chosen and use visualizations of the
+results to explain the performance and expected outcomes whenever possible.
+Guide the reader through your analysis with plenty of discussion of the results.
+For this task, we chose Option B: Association Rule Mining.
 
 Option B: Association Rule Mining
 
@@ -223,7 +314,8 @@ Option B: Association Rule Mining
 
 • Describe your results. What findings are the most compelling and why?
 
-Before we begin with our analysis, lets check out the rule frequencies within the dataset. We are looking for rules with `support >= .2`
+Before we begin with our analysis, lets check out the rule frequencies within
+the dataset. We are looking for rules with `support >= .2`
 
 ```{r rulefreq}
 ```
@@ -231,7 +323,9 @@ Before we begin with our analysis, lets check out the rule frequencies within th
 
 # Rule mining
 
-Next, lets mine some rules with the apriori algorithm, and then clean up redundant rules. We are still sorting out what to set the minsupp and minconf to.
+Next, lets mine some rules with the apriori algorithm, and then clean up
+redundant rules. We are still sorting out what to set the minsupp and minconf
+to.
 
 ```{r rulemine}
 ```
@@ -252,10 +346,15 @@ Next, let us inspect the rules, and examine their quality
 
 #### Discussion
 
-This plot shows us each rule, with x axis as support and Y axis as lift. They are colored by confidence. This makes a nice little view of which rules were made from the most data. These may not always be the most interesting rules, but they are definitely the strongest ones. From looking at this, we can note a few strong, interesting associations.
+This plot shows us each rule, with x axis as support and Y axis as lift. They
+are colored by confidence. This makes a nice little view of which rules were
+made from the most data. These may not always be the most interesting rules, but
+they are definitely the strongest ones. From looking at this, we can note a few
+strong, interesting associations.
 
 * Females are associated with low income bracket
-  * Conversely, being a male is (with low confidence) associated with a high income bracket. 
+  * Conversely, being a male is (with low confidence) associated with a high
+  income bracket.
 
 * Not being married is strongly associated with a low income bracket
 
@@ -265,7 +364,9 @@ This plot shows us each rule, with x axis as support and Y axis as lift. They ar
 
 * No family is also associated with low income
 
-These strong rules are by no means earth-shattering, but they do tell us that we are looking in the right direction, as they agree with the (sometimes unfortunate) realities of the world we live in.
+These strong rules are by no means earth-shattering, but they do tell us that we
+are looking in the right direction, as they agree with the (sometimes
+unfortunate) realities of the world we live in.
 
 
 ### Balloon plot
@@ -294,18 +395,28 @@ under 50k.
 ```
 
 #### Discussion
-The width of the arrows represents support and the color represents confidence. We can see a few interesting things here. First of all, we have a striking level of confidence that being married gets you a large income, and then also interestingly we see that working as a private worker/housekeeper/server is a part of a lot of the rules related to being in the low income bracket (You can see this by looking where all the rules converge on LHS order 1).
+
+The width of the arrows represents support and the color represents confidence.
+We can see a few interesting things here. First of all, we have a striking level
+of confidence that being married gets you a large income, and then also
+interestingly we see that working as a private worker/housekeeper/server is a
+part of a lot of the rules related to being in the low income bracket (You can
+see this by looking where all the rules converge on LHS order 1).
 
 ### Two key plot
 
-This plot is often used to discuss the relationship between the order of the rules and their support/confidence.
+This plot is often used to discuss the relationship between the order of the
+rules and their support/confidence.
 
 ```{r kplot, fig.cap="Two Key Plot"}
 ```
 
 #### Discussion
 
-We can find several interesting bits of information here. First, we see that we only produced one rule of order 4, a few rules of order 3, and a bunch of order 2. We also note that the area with high support and confidence (upper right, a bit of a sweet spot), is dominated by the shorter rules.
+We can find several interesting bits of information here. First, we see that we
+only produced one rule of order 4, a few rules of order 3, and a bunch of order
+2. We also note that the area with high support and confidence (upper right, a
+bit of a sweet spot), is dominated by the shorter rules.
 
 # Alternate Rule Mining
 
@@ -343,15 +454,19 @@ We see similar results as in section 7.2.1.
 
 * Private jobs also carry an association with low income.
 
-* One difference was that Female was NOT found to carry an association with low income within these rules.  Why, we are unsure.
+* One difference was that Female was NOT found to carry an association with low
+income within these rules.  Why, we are unsure.
 
 But we also noticed that two other itemsets began to surface around the highest lift.
 
-* Young was seen more often within the higher threshold lift rules, meaning yes, young people don't make as much money. 
+* Young was seen more often within the higher threshold lift rules, meaning yes,
+young people don't make as much money.
 
 * Owning a child also had a strong association with low income.  
 
-What was also interesting to see is that one of the rules with the highest lift, was (Young, never-married, own-child).  Which fits the tragic tale of the struggling single parent within our society. 
+What was also interesting to see is that one of the rules with the highest lift,
+was (Young, never-married, own-child).  Which fits the tragic tale of the
+struggling single parent within our society.
 
 ### Balloon plot
 
@@ -360,7 +475,12 @@ What was also interesting to see is that one of the rules with the highest lift,
 
 #### Discussion
 
-Here the large income bracket didn't appear in our graph, which validates why we didn't see any large income factors in the scatter plot.  This chart does show us similiarities between what we saw in small income.  That some of the highest itemsets for low income were (Young, never-married, own-child, Diploma, Private, White, United-States).  The strongest (Rule 1) being (Young, never-married, own-child)
+Here the large income bracket didn't appear in our graph, which validates why we
+didn't see any large income factors in the scatter plot.  This chart does show
+us similiarities between what we saw in small income.  That some of the highest
+itemsets for low income were (Young, never-married, own-child, Diploma, Private,
+White, United-States).  The strongest (Rule 1) being (Young, never-married,
+own-child)
 
 ### Two key plot
 
@@ -369,7 +489,12 @@ Here the large income bracket didn't appear in our graph, which validates why we
 
 #### Discussion
 
-Here we see our parameter expanding show differeng itemset levels. With the higher confidence level, we've gotten rid of more of the two quantity itemsets, but increased the number of higher order-itemsets.  For instance, We now have 5 5-item rulesets with different combinations of all the factors we saw in the previous plot. (Young, never-married, own-child, Diploma, Private, White, United-States).  
+Here we see our parameter expanding show differeng itemset levels. With the
+higher confidence level, we've gotten rid of more of the two quantity itemsets,
+but increased the number of higher order-itemsets.  For instance, We now have 5
+5-item rulesets with different combinations of all the factors we saw in the
+previous plot. (Young, never-married, own-child, Diploma, Private, White,
+United-States).
 
 # Targeting Small and Large Income  
 
@@ -418,35 +543,65 @@ section.
 
 Interesting small Income rules:
 
-* Not being married is associated with a low income. Out of our 25 best rules, 16 of them involved not being married, and our five highest lift rules all involved never married. This is clearly not a coincidence, however what this means and the cause of this is not so clear. We propose a few hypotheses about this:
+* Not being married is associated with a low income. Out of our 25 best rules,
+16 of them involved not being married, and our five highest lift rules all
+involved never married. This is clearly not a coincidence, however what this
+means and the cause of this is not so clear. We propose a few hypotheses about
+this:  
 
   * Married people, motivated by love, work harder and make more money
 
   * Shallow society deems people without money harder to marry
 
-* People who are married got married because they are more social, and thus they are given more raises, perform better in interviews, etc. In contrast, people who were not sociable enough to meet someone may not perform as well in interviews etc., giving them fewer opportunities to get a job
+* People who are married got married because they are more social, and thus they
+are given more raises, perform better in interviews, etc. In contrast, people
+who were not sociable enough to meet someone may not perform as well in
+interviews etc., giving them fewer opportunities to get a job
 
-* Having just a diploma from high school does not get you out of the lower income bracket. This is unsurprising, as today you need in general a minimum of a college education to start making good money (and even that is difficult). 5 out of our 25 rules involved highest education level = high school diploma
+* Having just a diploma from high school does not get you out of the lower
+income bracket. This is unsurprising, as today you need in general a minimum of
+a college education to start making good money (and even that is difficult). 5
+out of our 25 rules involved highest education level = high school diploma
 
-* 12 out of 25 rules involved being young. This makes perfect sense, as entry level jobs which young people get do not pay very well.
+* 12 out of 25 rules involved being young. This makes perfect sense, as entry
+level jobs which young people get do not pay very well.
 
-* 8 out of 25 rules involved being in the private /housekeeping/server field. This makes sense, as these workers are severly underpaid
+* 8 out of 25 rules involved being in the private /housekeeping/server field.
+This makes sense, as these workers are severly underpaid
 
-* 4 out of 25 rules involved having a child. If you have a child, you ***should*** be spending more time with them, and maybe focusing a little less on your career. Therefore, you will probably earn less. This pattern makes sense.
+* 4 out of 25 rules involved having a child. If you have a child, you
+***should*** be spending more time with them, and maybe focusing a little less
+on your career. Therefore, you will probably earn less. This pattern makes
+sense.
 
-* The rules for our small income target have a support of 12% and confidence of 95%. This means that (never-married, Diploma, Young, Private/housekeeper/server, and child) are observed in 12% of the dataset. We therefore believe that 95% of the time any of the attributes (never-married, Diploma, Young, Private/housekeeper/server, and child) are present, it will result in a small income.
+* The rules for our small income target have a support of 12% and confidence of
+95%. This means that (never-married, Diploma, Young, Private/housekeeper/server,
+and child) are observed in 12% of the dataset. We therefore believe that 95% of
+the time any of the attributes (never-married, Diploma, Young,
+Private/housekeeper/server, and child) are present, it will result in a small
+income.
 
 ### Large Income
 
 Interesting large Income rules:
 
-*	Thankfully, opposite to the small income analysis, large income targeting shows that being married greatly influences your income as it shows up in 9 of the 15 rules present.  Meaning again that by working as a team, you get more out of life.  So go find yourself a husband/wife.  
+*	Thankfully, opposite to the small income analysis, large income targeting
+shows that being married greatly influences your income as it shows up in 9 of
+the 15 rules present.  Meaning again that by working as a team, you get more out
+of life.  So go find yourself a husband/wife.
 
-*	The next highest frequent itemset is hard-working that shows up in 8 of the 15 rules.  Which makes perfect sense that the more time you put into a job, the likelier you are for promotion and advancement within an organization.  
+*	The next highest frequent itemset is hard-working that shows up in 8 of the 15
+rules.  Which makes perfect sense that the more time you put into a job, the
+likelier you are for promotion and advancement within an organization.
 
-*	Education = Bachelors , native_country = United-States, relationship = husband are present in 5 out of the 15 rules.  
+*	Education = Bachelors , native_country = United-States, relationship = husband
+are present in 5 out of the 15 rules.
 
-* The rules for our large income target have a support of 05% and confidence of 55%. This means that (married, hard-working, Bachelors, United-States, Husband) are observed in 5% of the dataset. We therefore believe that 55% of the time any of the attributes (married, hard-working, Bachelors, United-States, Husband) are present, it will result in a large income.
+* The rules for our large income target have a support of 05% and confidence of
+55%. This means that (married, hard-working, Bachelors, United-States, Husband)
+are observed in 5% of the dataset. We therefore believe that 55% of the time any
+of the attributes (married, hard-working, Bachelors, United-States, Husband) are
+present, it will result in a large income.
 
 
 # Deployment
@@ -454,7 +609,9 @@ Be critical of your performance and tell the reader how you current model might
 be usable by other parties. Did you achieve your goals? If not, can you reign in
 the utility of your modeling?
 
-* How useful is your model for interested parties (i.e., the companies or organizations that might want to use it)?
+
+* How useful is your model for interested parties (i.e., the companies or
+organizations that might want to use it)?
 
 * How would your deploy your model for interested parties?
 
@@ -462,35 +619,65 @@ the utility of your modeling?
 
 * How often would the model need to be updated, etc.?
 
-Our current model, wouldn't be a good option for a production environment.  Granted, there is astounding amounts of transacational data out there that can benefit from apriori and associative rule mining.  Due to the trial and error used to isolate various rules and itemsets.  We're not confident that a new dataset will have any similar behavior or show similar itemsets. It is probably best used for the 1990 data on which it was created.  
+Our current model, wouldn't be a good option for a production environment.
+Granted, there is astounding amounts of transacational data out there that can
+benefit from apriori and associative rule mining.  Due to the trial and error
+used to isolate various rules and itemsets.  We're not confident that a new
+dataset will have any similar behavior or show similar itemsets. It is probably
+best used for the 1990 data on which it was created.
 
-Overall, i believe our group achieved the goals we set forth.  We learned the process of associative rule mining, discovered new trends and validated those previously seen throughout our analysis of this dataset.  We're satisfied that we've created a useful model for anyone who was looking to analyze Census Data.
+Overall, i believe our group achieved the goals we set forth.  We learned the
+process of associative rule mining, discovered new trends and validated those
+previously seen throughout our analysis of this dataset.  We're satisfied that
+we've created a useful model for anyone who was looking to analyze Census Data.
 
-  * Interested parties for this dataset could be activist, feminist, political campaigns, or others looking to change public policy through validation of its inhabitants characteristics. The model would theoretically work for other years of Census data (with light variable tweaking), it could also be applied to look for time series trends. 
+  * Interested parties for this dataset could be activist, feminist, political
+  campaigns, or others looking to change public policy through validation of its
+  inhabitants characteristics. The model would theoretically work for other
+  years of Census data (with light variable tweaking), it could also be applied
+  to look for time series trends.
   
   * Since our model doesn't require long run times, one method would be to deploy an endpoint REST API.  That way users could query for a prediction on income, then get the results back quickly and easily.  Maintenance would be fairly low, so hosting it on an AWS instance might prove frugal and functional.  
   
-  * Other data would consist of supplying other years of Census Data to see how if similar rulesets appear over time. Pairing this dataset with economic information could also prove beneficial as i'm sure the economy would influence unemployment rate, salaries in various industries, and a multitude of other factors that influence people's income.  
+  * Other data would consist of supplying other years of Census Data to see how
+  if similar rulesets appear over time. Pairing this dataset with economic
+  information could also prove beneficial as i'm sure the economy would
+  influence unemployment rate, salaries in various industries, and a multitude
+  of other factors that influence people's income.
   
-  * Since we're dealing with Census data, a yearly update of the model would be sufficient to maintain its usefulness.
+  * Since we're dealing with Census data, a yearly update of the model would be
+  sufficient to maintain its usefulness.
+
 
 
 
 # Exceptional Work
 
 
-For our exceptional work, we decided to try and optimize the number of rules produced in our apriori algorithm with the RHS being both low and high income. We decided to further optimize it by finding the ruleset which would provide us the highest average lift, while being digestible. To do that, we implemented a fully parallelized grid search.
+For our exceptional work, we decided to try and optimize the number of rules
+produced in our apriori algorithm with the RHS being both low and high income.
+We decided to further optimize it by finding the ruleset which would provide us
+the highest average lift, while being digestible. To do that, we implemented a
+fully parallelized grid search.
 
 ## Building a Grid
 
-There are two parameters to optimize in the apriori algorithm: confidence and support. Normally, these are chosen using an in depth knowledge of the data combined with an understanding of the goals of the study. Because this research is purely academic, and we are new to the apriori algorithm, we do not have a prior understanding to tell us what support and confidence will be the most useful for us. So, we must optimize both. We will begin by creating two objects, `conf` and `supp`, for confidence and support respectively. Each will be vectors from 0.01 to 0.99:
+There are two parameters to optimize in the apriori algorithm: confidence and
+support. Normally, these are chosen using an in depth knowledge of the data
+combined with an understanding of the goals of the study. Because this research
+is purely academic, and we are new to the apriori algorithm, we do not have a
+prior understanding to tell us what support and confidence will be the most
+useful for us. So, we must optimize both. We will begin by creating two objects,
+`conf` and `supp`, for confidence and support respectively. Each will be vectors
+from 0.01 to 0.99:
 
 ```{r}
 x <- 1:99
 conf <- supp <- x/100
 ```
 
-Next, we will create a data frame containing all possible combinations of support and confidence:
+Next, we will create a data frame containing all possible combinations of
+support and confidence:
 
 ```{r}
 init <- data.frame(conf = conf, supp = supp)
@@ -500,7 +687,13 @@ nrow(params)
 
 ## Defining the Search Function
 
-Next, we would like to create a function which we can iterate through. We would like the function to take in a value of support and confidence, maybe a value of appearance (but with defaults for our specific case) and run it through the apriori algorithm. Then, we would like it to prune redundant results from the rule, get the length and average lift of the ruleset, and return those in a convenient labeled vector:
+Next, we would like to create a function which we can iterate through. We would
+like the function to take in a value of support and confidence, maybe a value of
+appearance (but with defaults for our specific case) and run it through the
+apriori algorithm. Then, we would like it to prune redundant results from the
+rule, get the length and average lift of the ruleset, and return those in a
+convenient labeled vector:
+
 
 ```{r, eval = F}
 transactions <- data
@@ -511,6 +704,7 @@ search <- function(sup,con) {
                                      rhs=c("income_bracket=small", "income_bracket=large"), 
                                      default="lhs"),
                    control = list(verbose=F)) 
+
   redundant <- is.redundant(rules)
   rulepruned <- rules[redundant == FALSE]
   rulelength  <- length(rulepruned)
@@ -525,11 +719,17 @@ search <- function(sup,con) {
 
 ## Performing the grid search
 
-We will perform the grid search in parallel, in two ways: using R's built in `parallel` library, utilizing a `FORK` cluster (not available on Windows), and using `doParallel` and `foreach`, with a `socket` cluster (cross platform).
+We will perform the grid search in parallel, in two ways: using R's built in
+`parallel` library, utilizing a `FORK` cluster (not available on Windows), and
+using `doParallel` and `foreach`, with a `socket` cluster (cross platform).
 
 ### Grid Search using `parallel`
 
-For this, we will use the `mcmapply` (multicore matrix apply). This takes a function, any number of vectors of equal length, pops those vectors into the function, and runs it over the specified number of cores. It outputs them in the form of a list, which we will turn into a data frame
+
+For this, we will use the `mcmapply` (multicore matrix apply). This takes a
+function, any number of vectors of equal length, pops those vectors into the
+function, and runs it over the specified number of cores. It outputs them in the
+form of a list, which we will turn into a data frame
 
 
 ```{r, eval = F}
@@ -540,7 +740,10 @@ results <- do.call(rbind, gs)
 
 ### Grid Search using `doParallel`
 
-We can use the amazing doParallel library to run our R code in parallel without process forking. Instead, it connects to your computer's CPUs using sockets, which work on all OS's. Because we are not using convenient process forking, we will have to do a little more work to set things up:
+We can use the amazing doParallel library to run our R code in parallel without
+process forking. Instead, it connects to your computer's CPUs using sockets,
+which work on all OS's. Because we are not using convenient process forking, we
+will have to do a little more work to set things up:
 
 ```{r, eval = F}
 libary(doParallel)
@@ -551,7 +754,10 @@ invisible(clusterEvalQ(workers, library(arules))) # loads the arules library ont
 registerDoParallel(workers) # register our cluster for parallel computation
 ```
 
-Now that we are set up with our cluster of CPUs, we can evaluate our grid search in parallel. Note here, we can specify how we combine our outputs. In this case we are going to combine them using rbind, to give the exact same results as our `results` object.
+Now that we are set up with our cluster of CPUs, we can evaluate our grid search
+in parallel. Note here, we can specify how we combine our outputs. In this case
+we are going to combine them using rbind, to give the exact same results as our
+`results` object.
 
 ```{r, eval = F}
 results <- foreach(i = 1:nrow(params), .combine = rbind) %dopar% {
@@ -566,7 +772,9 @@ load("analysis/transact.Rda")
 
 ## Viewing the Results
 
+
 We now must define what it means to be `digestible`. The authors propose that any functioning human being can get the main idea, or overall pattern, in a set of 20-30 rules. So we will find the rules created that give us that, and we want to also find the rulesets with the highest lift. We will do so using `dplyr`:
+
 
 ```{r}
 results %>% arrange(desc(avlift)) %>% filter(nrules <=30) %>% filter(nrules >= 20) %>% filter(support > 0.15) %>% filter(conf > 0.15)
@@ -587,4 +795,8 @@ sortedOptimalRules <- sort(optimalRules, by = "lift", decreasing = TRUE)
 inspectDT(sortedOptimalRules)
 ```
 
+# Appendix {-}
+
+```{r all-code,ref.label=all_labels()[-1], echo=TRUE, eval=FALSE, tidy=F}
+```
 
