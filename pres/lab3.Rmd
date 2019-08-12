@@ -1,4 +1,4 @@
----
+  ---
 title: "Lab 3: Association Rules"
 author: "Che Cobb, Andy Heroy, Carson Drake, David Josephs"
 date: "`r Sys.Date()`"
@@ -272,7 +272,7 @@ In the small income bracket, we see rules such as (Never-married, fulltime), (fe
 #### Discussion
 The width of the arrows represents support and the color represents confidence. We can see a few interesting things here. First of all, we have a striking level of confidence that being married gets you a large income, and then also interestingly we see that working as a private worker/housekeeper/server is a part of a lot of the rules related to being in the low income bracket (You can see this by looking where all the rules converge on LHS order 1).
 
-#### Two key plot
+### Two key plot
 
 This plot is often used to discuss the relationship between the order of the rules and their support/confidence.
 
@@ -282,13 +282,6 @@ This plot is often used to discuss the relationship between the order of the rul
 #### Discussion
 
 We can find several interesting bits of information here. First, we see that we only produced one rule of order 4, a few rules of order 3, and a bunch of order 2. We also note that the area with high support and confidence (upper right, a bit of a sweet spot), is dominated by the shorter rules.
-
-### Grouped Matrix Plot
-
-This is a grouped matrix plot, which in this case is not interpretable or useful, but we will show it anyways
-
-```{r gplot, fig.cap="Grouped Plot"}
-```
 
 # Alternate Rule Mining
 
@@ -304,20 +297,50 @@ We can see that this time around we've generated 36 rule's.  We'll put them thro
 ```{r inspec}
 ```
 
-## Plotting
+## Plots
+
+### Scatterplot
 
 ```{r plot2}
 ```
 
+#### Discussion
+
+We see similar results as in section 8.2.1. 
+
+* Never being married has a strong association with low income.
+
+* High school Diploma is a lower income indicator
+
+* Private jobs also carry an association with low income.
+
+* One difference was that Female was NOT found to carry an association with low income within these rules.  Why, we are unsure.
+
+But we also noticed that two other itemsets began to surface around the highest lift.
+
+* Young was seen more often within the higher threshold lift rules, meaning yes, young people don't make as much money. 
+
+* Owning a child also had a strong association with low income.  
+
+What was also interesting to see is that one of the rules with the highest lift, was (Young, never-married, own-child).  Which fits the tragic tale of the struggling single parent within our society. 
+
+### Balloon plot
+
 ```{r bplo2}
 ```
 
+#### Discussion
+
+Here the large income bracket didn't appear in our graph, which validates why we didn't see any large income factors in the scatter plot.  This chart does show us similiarities between what we saw in small income.  That some of the highest itemsets for low income were (Young, never-married, own-child, Diploma, Private, White, United-States).  The strongest (Rule 1) being (Young, never-married, own-child)
+
+### Two key plot
 
 ```{r kplo2}
 ```
 
-```{r gplo2}
-```
+#### Discussion
+
+Here we see our parameter expanding show differeng itemset levels. With the higher confidence level, we've gotten rid of more of the two quantity itemsets, but increased the number of higher order-itemsets.  For instance, We now have 5 5-item rulesets with different combinations of all the factors we saw in the previous plot. (Young, never-married, own-child, Diploma, Private, White, United-States).  
 
 # Targeting Small and Large Income
 #### Small Income
