@@ -355,7 +355,7 @@ We will discuss the results from large income targeting in the conclusion sectio
 # Conclusion
 ### Small Income
 
-Interesting large Income rules:
+Interesting small Income rules:
 
 * Not being married is associated with a low income. Out of our 25 best rules, 16 of them involved not being married, and our five highest lift rules all involved never married. This is clearly not a coincidence, however what this means and the cause of this is not so clear. We propose a few hypotheses about this:
   * Married people, motivated by love, work harder and make more money
