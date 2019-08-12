@@ -566,7 +566,7 @@ load("analysis/transact.Rda")
 
 ## Viewing the Results
 
-We now must define what it means to be `digestible`. In my opinion, between 20 and 25 rules is clearly digestible to anyone. So we will find the rules created that give us that, and we want to also find the rulesets with the highest lift. We will do so using `dplyr`:
+We now must define what it means to be `digestible`. The authors propose that any functioning human being can get the main idea, or overall pattern, in a set of 20-30 rules. So we will find the rules created that give us that, and we want to also find the rulesets with the highest lift. We will do so using `dplyr`:
 
 ```{r}
 results %>% arrange(desc(avlift)) %>% filter(nrules <=30) %>% filter(nrules >= 20) %>% filter(support > 0.15) %>% filter(conf > 0.15)
