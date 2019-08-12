@@ -31,11 +31,26 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 ```
 
 
+
 # Project Overview
 
-Please we need to discuss project motivation and our experiment, just as Rida asked
+In our previous two projects, we spent a great deal of time predicting income on the US census dataset. What we would like to determine in this project, is to see if the variables we determined important in predicting high or low income are important factors in association rule mining as well. Please refer to our [second lab](https://github.com/drake-smu/7331-lab-2/blob/master/notebooks/lab_2-team_3.ipynb) for more information. Previously, we have discovered that important predictor variables in classifying income level were:
 
-Then we can begin our analysis
+* marriage status
+
+* Male or Female
+
+* age
+
+* Hours per week
+
+* Job role
+
+* Education
+
+In this study we will examine the same dataset through association rule mining. We will not only attempt to affirm our previously chosen factors that are associated with low or high income, but also look deeper into the relationships, and examine what levels of each factor are associated with high or low income.
+
+We will perform a small ARM analysis and a large one while identifying relationships between both high and low income brackets with all the factors present in the dataset. We will then dive deeper, and perform ARM analysis on the relationships between all the factors of our dataset with high income bracket, and low income bracket individually, in an attempt to determine precisely what factors are associated with what income bracket. Finally, we will demonstrate an implementation of a grid search for the apriori algorithm, and propose upper and lower bounds for digestibility of a set of association rules, and demonstrate our process of selecting the strongest set of rules that we feel can be easily understood. 
 
 # Business Understanding
 
@@ -460,6 +475,7 @@ Overall, i believe our group achieved the goals we set forth.  We learned the pr
   * Since we're dealing with Census data, a yearly update of the model would be sufficient to maintain its usefulness.
 
 
+
 # Exceptional Work
 
 
@@ -553,20 +569,20 @@ load("analysis/transact.Rda")
 We now must define what it means to be `digestible`. In my opinion, between 20 and 25 rules is clearly digestible to anyone. So we will find the rules created that give us that, and we want to also find the rulesets with the highest lift. We will do so using `dplyr`:
 
 ```{r}
-results %>% arrange(desc(avlift)) %>% filter(nrules <=25) %>% filter(nrules >= 20) %>% filter(support > 0.2) %>% filter(conf > 0.2)
+results %>% arrange(desc(avlift)) %>% filter(nrules <=30) %>% filter(nrules >= 20) %>% filter(support > 0.15) %>% filter(conf > 0.15)
 ```
 
-Looks like we have a clear winner. We will now try the apriori algorithm using our parameters
+### Selection
+
+To select the proper support and confidence for the optimal digestibility, we will select the highest average lift
 
 ```{r}
 optimalRules <- apriori(data, 
-                   parameter = list(conf=0.24, supp = 0.21),
+                   parameter = list(conf=0.18, supp = 0.32),
                    appearance = list(
                      rhs=c("income_bracket=small", "income_bracket=large"), 
                      default="lhs"),
                    control = list(verbose=F)) 
-redund <- is.redundant(optimalRules)
-optimalRules <- optimalRules[redund == F]
 sortedOptimalRules <- sort(optimalRules, by = "lift", decreasing = TRUE)
 inspectDT(sortedOptimalRules)
 ```
