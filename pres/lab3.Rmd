@@ -448,7 +448,7 @@ Overall, i believe our group achieved the goals we set forth.  We learned the pr
 
   * Interested parties for this dataset could be activist, feminist, political campaigns, or others looking to change public policy through validation of its inhabitants characteristics. The model would theoretically work for other years of Census data (with light variable tweaking), it could also be applied to look for time series trends. 
   
-  * TODO - DON'T KNOW WHAT TO SAY HERE.
+  * Since our model doesn't require long run times, one method would be to deploy an endpoint REST API.  That way users could query for a prediction on income, then get the results back quickly and easily.  Maintenance would be fairly low, so hosting it on an AWS instance might prove frugal and functional.  
   
   * Other data would consist of supplying other years of Census Data to see how if similar rulesets appear over time. Pairing this dataset with economic information could also prove beneficial as i'm sure the economy would influence unemployment rate, salaries in various industries, and a multitude of other factors that influence people's income.  
   
