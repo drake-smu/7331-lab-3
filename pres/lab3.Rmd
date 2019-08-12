@@ -37,9 +37,6 @@ Please we need to discuss project motivation and our experiment, just as Rida as
 
 Then we can begin our analysis
 
-# Project Setup
-
-
 # Business Understanding
 
 * [10 points] Describe the purpose of the data set you selected (i.e., why was
